@@ -11,7 +11,6 @@ https://roman-serius.itch.io/gm-terminal-kit-thornfield-demo
 
 - `GM Terminal Kit/`: the kit itself, the GM guide and the README
 - `Test scenarios/showcase.json`: Kestrel Station, the sample game built into the kit
-- `Promotional Material/`: launch devlog text
 
 ## Try it
 
