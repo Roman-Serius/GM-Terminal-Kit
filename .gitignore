@@ -1,0 +1,16 @@
+# Paid pack ($2 on itch.io), keep it off the public repo
+Thornfield source/
+
+# Built files for itch.io (zips and the Thornfield browser game)
+itch.io uploads/
+
+# Old snapshots, git keeps history now
+Backups/
+
+# Personal notes
+What's in this folder.txt
+
+# Mac and editor clutter
+.DS_Store
+__MACOSX/
+.vscode/

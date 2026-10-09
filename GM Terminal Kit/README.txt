@@ -1,0 +1,126 @@
+GM TERMINAL KIT 1.1 - README
+
+1. WHAT THIS IS
+
+GM Terminal Kit is a single HTML file for game masters or devs. You build a fake
+retro computer (files, folders, accounts, mail, passwords, programs), then
+switch to Player mode and hand the screen to your players.
+
+Quick start
+- Open the file in Chrome, Safari or Firefox. No install and no account.
+- Click "Load the sample scenario" to play Kestrel Station, a short game
+  that shows off the kit: start Player mode and type TYPE README. Or start
+  from the blank drive.
+- Double-click a file to edit it. Right-click for New Folder, Rename,
+  Get Info (passwords, user restrictions, hidden, self-destruct) and more.
+- Drag files in from your computer. Images appear as ASCII art for players,
+  and animated GIFs play as ASCII animations.
+- Use Events to change the game while it is played: files and mail appear,
+  and the event's script runs (a message, a character talking, a finale).
+  An event can fire when players log in, type a phrase, read or unlock
+  something, or enter a folder; from a program (@trigger Vault opened); on a
+  timer; or when you press Ctrl+Shift+1 to 9 in player mode.
+- Scripts can play sounds (@sound alarm), speak aloud (@speak), flash,
+  shake or glitch the screen, switch theme (@theme Red alert) and ask the
+  players a question with a branching answer (@ask / @if / @else / @endif).
+  Use Run now in the Events or Commands window to test a script instantly,
+  and Event map to see the whole scenario as an outline.
+- @notify sends you a Discord message when players reach a point in the
+  game, even from a player file you sent to remote players.
+- Pick a theme from the toolbar: 80s green CRT, DOS PC, 80s home computer,
+  Military teletype, 90s corporate, Cyberpunk and more.
+- Click Player mode to launch the terminal. Type GMMODE (or press
+  Ctrl+Shift+G) to return to your workspace.
+- Use Answer key to print a list of every password and what it unlocks.
+- Use Export for players to save a stand-alone file that players can work
+  through without a GM. Content behind a password is encrypted inside it.
+- Use Reset session between groups. It restores self-destructed and deleted
+  files, undoes program reveals and turns fired events back off.
+
+For full instructions, recipes and troubleshooting, open
+"GM Terminal Kit - GM Guide.html" in your browser.
+
+
+2. YOUR DATA
+
+Your scenario is saved only inside the browser you use. It is not sent
+anywhere. Browsers can clear saved data, so use Export before every game
+night. Use Import on another device to load the same scenario there.
+If the browser runs out of space (usually from large images), a red banner
+appears. Your work is still open, so click Export now before closing the page.
+
+The one exception is @notify, and only if you set it up. With a Discord
+webhook link from your own server in Settings, @notify lines send short
+messages to your channel. Only the message you wrote is sent; the kit adds
+nothing about the player. Player files that use it tell players so when
+they start. The link travels inside those player files, so someone digging
+through one could find it; if it is ever misused, delete the webhook in
+Discord and make a new one. Export (your backup) leaves the link out.
+
+
+3. WHAT YOU CAN DO WITH IT
+
+GM Terminal Kit is pay-what-you-want, made by RomanSerius. Whatever you
+paid (even nothing), go wild:
+
+- Use it for any game, party, class, event or stream, paid ones included.
+- Make scenarios and share them, upload them, even sell them. They're
+  yours. Player files carry a bit of the kit's code inside, and that's
+  fine.
+- Tinker with your own copy of the kit as much as you like.
+- Borrow from the Kestrel Station sample for your own scenarios.
+
+If you make something with it and put it out there, I'd really
+appreciate a credit, something like:
+
+    Made with GM Terminal Kit by RomanSerius
+    https://roman-serius.itch.io/gm-terminal-kit-thornfield-demo
+
+Two small asks:
+
+- Please don't re-upload the kit itself somewhere else. Share the
+  itch.io page instead, so people get updates and a chance to chip in:
+  https://roman-serius.itch.io/gm-terminal-kit-thornfield-demo
+- Please don't publish a modified copy of the kit as your own tool.
+
+Copyright (c) 2026 RomanSerius.
+
+
+4. NO GUARANTEES
+
+The kit is made with care, but it comes as it is, with no promises. Your
+scenarios live in your browser, and browsers sometimes clear their data,
+so click Export often to keep a backup.
+
+
+5. THIRD-PARTY NOTICES
+
+- Screen fonts: VT323 (copyright The VT323 Project Authors), Cutive Mono
+  (copyright Vernon Adams), IBM Plex Mono (copyright IBM Corp.) and Share
+  Tech Mono (copyright Carrois Type Design), all licensed under the SIL Open
+  Font License 1.1 (https://openfontlicense.org). The fonts are loaded from
+  Google Fonts when you are online and are not bundled. Without an internet
+  connection the kit falls back to fonts already on the computer.
+- Sounds and the speaking voice are generated by your browser. No audio
+  files are included.
+- Icons: all interface icons are simple shapes drawn inside the file. No
+  third-party icon set or image library is used.
+
+
+6. TRADEMARKS
+
+GM Terminal Kit is not affiliated with, endorsed by or sponsored by
+Microsoft, Apple or any other company. Product and company names that people use
+in their own scenarios belong to their owners.
+
+
+7. VERSION HISTORY
+
+1.1
+- New: @notify sends a message to your Discord channel when players reach
+  a point in the game, even from a player file you sent to remote players.
+  Add your webhook link in Settings. Messages sent while offline go out
+  later, marked with the time they happened.
+
+1.0
+- First release.

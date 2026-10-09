@@ -1,0 +1,1200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>GM Terminal Kit - GM Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #f5f5f7;
+        --panel: #ffffff;
+        --line: #d6d6dc;
+        --tx: #1d1d1f;
+        --mut: #5f5f66;
+        --acc: #0a7d4f;
+        --acc-soft: #e3f3ea;
+        --warn: #8a5a00;
+        --warn-soft: #fbf1dc;
+        --crt-fg: #33ff66;
+        --crt-bg: #050805;
+        color-scheme: light;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #1c1c1e;
+          --panel: #2a2a2d;
+          --line: #3a3a3f;
+          --tx: #f2f2f4;
+          --mut: #a6a6ad;
+          --acc: #4cd694;
+          --acc-soft: #1f3a2d;
+          --warn: #f0b85a;
+          --warn-soft: #3a2f1a;
+          color-scheme: dark;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 16px;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--tx);
+        font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      }
+      .wrap {
+        display: grid;
+        grid-template-columns: 250px minmax(0, 760px);
+        gap: 48px;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 40px 24px 80px;
+      }
+      nav {
+        position: sticky;
+        top: 24px;
+        align-self: start;
+        max-height: calc(100vh - 48px);
+        overflow: auto;
+        font-size: 14px;
+      }
+      nav b {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--mut);
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      nav ol {
+        margin: 0;
+        padding-left: 28px;
+      }
+      nav li {
+        margin: 4px 0;
+      }
+      nav a {
+        color: var(--tx);
+        text-decoration: none;
+      }
+      nav a:hover {
+        color: var(--acc);
+      }
+      header.hero {
+        margin-bottom: 40px;
+      }
+      .eyebrow {
+        font: 22px "VT323", "Courier New", monospace;
+        color: var(--acc);
+        margin: 0;
+      }
+      h1 {
+        font-size: 40px;
+        line-height: 1.15;
+        margin: 4px 0 12px;
+      }
+      .lede {
+        font-size: 18px;
+        color: var(--mut);
+        margin: 0;
+      }
+      h2 {
+        font-size: 26px;
+        margin: 56px 0 12px;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+      }
+      h3 {
+        font-size: 18px;
+        margin: 28px 0 8px;
+      }
+      p,
+      ul,
+      ol {
+        margin: 0 0 14px;
+      }
+      li {
+        margin: 4px 0;
+      }
+      a {
+        color: var(--acc);
+      }
+      code,
+      kbd {
+        font: 14px ui-monospace, Menlo, Consolas, monospace;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        padding: 1px 5px;
+        white-space: nowrap;
+      }
+      kbd {
+        border-bottom-width: 2px;
+      }
+      .table-wrap {
+        overflow-x: auto;
+        margin: 0 0 18px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 15px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+      th,
+      td {
+        text-align: left;
+        vertical-align: top;
+        padding: 9px 12px;
+        border-bottom: 1px solid var(--line);
+      }
+      th {
+        font-size: 13px;
+        color: var(--mut);
+        font-weight: 600;
+      }
+      tr:last-child td {
+        border-bottom: 0;
+      }
+      td:first-child {
+        white-space: nowrap;
+      }
+      .crt {
+        background: var(--crt-bg);
+        color: var(--crt-fg);
+        font: 20px/1.2 "VT323", "Courier New", monospace;
+        text-shadow: 0 0 5px rgba(51, 255, 102, 0.45);
+        padding: 14px 18px;
+        border-radius: 8px;
+        margin: 0 0 18px;
+        overflow-x: auto;
+        white-space: pre;
+      }
+      .crt .dim {
+        opacity: 0.6;
+      }
+      .note,
+      .tip {
+        border-radius: 8px;
+        padding: 12px 16px;
+        margin: 0 0 18px;
+        border-left: 4px solid;
+      }
+      .tip {
+        background: var(--acc-soft);
+        border-color: var(--acc);
+      }
+      .note {
+        background: var(--warn-soft);
+        border-color: var(--warn);
+      }
+      .tip > :last-child,
+      .note > :last-child {
+        margin-bottom: 0;
+      }
+      .recipe {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 16px 20px;
+        margin: 0 0 18px;
+      }
+      .recipe h3 {
+        margin-top: 0;
+      }
+      .recipe > :last-child {
+        margin-bottom: 0;
+      }
+      dt {
+        font-weight: 600;
+        margin-top: 16px;
+      }
+      dd {
+        margin: 4px 0 0;
+      }
+      footer {
+        margin-top: 64px;
+        color: var(--mut);
+        font-size: 14px;
+      }
+      @media (max-width: 860px) {
+        .wrap {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 24px;
+          padding: 24px 16px 64px;
+        }
+        nav {
+          position: static;
+          max-height: none;
+          background: var(--panel);
+          border: 1px solid var(--line);
+          border-radius: 10px;
+          padding: 14px 16px;
+        }
+        h1 {
+          font-size: 32px;
+        }
+      }
+      @media print {
+        nav {
+          display: none;
+        }
+        .wrap {
+          display: block;
+        }
+        h2 {
+          break-after: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <nav aria-label="Contents">
+        <b>Contents</b>
+        <ol>
+          <li><a href="#start">Getting started</a></li>
+          <li><a href="#files">Files and folders</a></li>
+          <li><a href="#info">Get Info: locks and secrets</a></li>
+          <li><a href="#accounts">Accounts and mail</a></li>
+          <li><a href="#events">Events</a></li>
+          <li><a href="#scripts">Programs and commands</a></li>
+          <li><a href="#play">Running a game</a></li>
+          <li><a href="#players">Player command reference</a></li>
+          <li><a href="#after">Between sessions</a></li>
+          <li><a href="#settings">Settings and themes</a></li>
+          <li><a href="#saving">Saving, Export and Import</a></li>
+          <li><a href="#share">Player files</a></li>
+          <li><a href="#recipes">Recipes</a></li>
+          <li><a href="#help">Troubleshooting</a></li>
+          <li><a href="#keys">Keyboard shortcuts</a></li>
+        </ol>
+      </nav>
+
+      <main>
+        <header class="hero">
+          <p class="eyebrow">C:\&gt; HELP</p>
+          <h1>GM Guide</h1>
+          <p class="lede">Reference for building and running scenarios in GM Terminal Kit.</p>
+        </header>
+
+        <!-- ============================================================ -->
+        <h2 id="start">1. Getting started</h2>
+        <p>
+          GM Terminal Kit is a single HTML file. It runs in a web browser (Chrome, Safari or
+          Firefox) and needs no installation or account.
+        </p>
+        <p>The kit has two modes:</p>
+        <ul>
+          <li>
+            GM workspace: where the scenario is built. It is laid out like a file manager, with
+            folders on the left, files in the middle and a toolbar along the top.
+          </li>
+          <li>
+            Player mode: a full-screen retro terminal for the players, who explore it by typing
+            commands such as <code>DIR</code> and <code>TYPE</code>.
+          </li>
+        </ul>
+
+        <h3>Sample scenario</h3>
+        <p>
+          On a blank drive, click <b>Load the sample scenario</b>, or open <b>Settings</b> and
+          click <b>Load sample</b>. The sample, <i>Kestrel Station</i>, is a short game that shows
+          off the kit. Start <b>Player mode</b> and type <code>TYPE README</code>. Each step of
+          the puzzle uses a different feature, and a line starting with <code>[KIT]</code>
+          explains which one: hidden files, a login that delivers mail, a password-protected
+          folder, a self-destructing file only one account can open, a program that asks a
+          question, a countdown with sound and a red alert theme, <code>FIND</code>, a secret
+          phrase and two endings. A timer event gives a hint after four minutes. The full
+          solution is in the hidden file <code>SOLUTION.TXT</code>.
+        </p>
+        <p>The sample also has feature reels, commands that demonstrate one thing each:</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Command</th><th>Shows</th></tr>
+            <tr><td><code>SOUNDS</code></td><td>Every sound effect, one by one</td></tr>
+            <tr><td><code>VOICE</code></td><td>The <code>@speak</code> voice</td></tr>
+            <tr><td><code>EFFECTS</code></td><td>Flash, shake and glitch, then all at once</td></tr>
+            <tr><td><code>THEMES</code></td><td>Every theme; press Enter for the next one</td></tr>
+            <tr><td><code>ASK</code></td><td>A question with branching answers</td></tr>
+            <tr><td><code>GIF</code></td><td>An animated GIF playing as ASCII art</td></tr>
+            <tr><td><code>ALL</code></td><td>Everything above in a row</td></tr>
+          </table>
+        </div>
+        <p>
+          Afterwards, open the GM workspace and look at <b>Events</b>, <b>Event map</b> and
+          <b>Answer key</b> to see how it was built. The examples in this guide, such as
+          <code>OVERRIDE.EXE</code> and <code>SHUTDOWN 4471</code>, come from the sample.
+        </p>
+
+        <h3>Toolbar</h3>
+        <p>
+          The toolbar follows the order you work in. The top row is for making the game: name it,
+          build it, play it. The bottom row is for checking and saving it.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Group</th><th>Control</th><th>Function</th></tr>
+            <tr><td>Scenario</td><td>Title box</td><td>Scenario name, shown on the boot screen and by <code>VER</code>.</td></tr>
+            <tr><td rowspan="3">Build</td><td>Events</td><td>Events that change the game during play, plus the Event map. The label shows how many have fired, e.g. "Events 1/3".</td></tr>
+            <tr><td>Accounts</td><td>Usernames, passwords and mail.</td></tr>
+            <tr><td>Commands</td><td>Custom commands for players to type.</td></tr>
+            <tr><td rowspan="4">Play</td><td>Theme menu</td><td>The terminal's look. The swatch shows its colors.</td></tr>
+            <tr><td>Start as</td><td>The account players are logged in as when player mode starts.</td></tr>
+            <tr><td>Player mode</td><td>Launches the terminal.</td></tr>
+            <tr><td>Reset session</td><td>Undoes changes made during play.</td></tr>
+            <tr><td rowspan="2">Check</td><td>Answer key</td><td>List of every password, lock and event.</td></tr>
+            <tr><td>Activity</td><td>Log of player commands and actions.</td></tr>
+            <tr><td rowspan="3">Save &amp; share</td><td>Export</td><td>Saves the scenario to a file, as a backup or to move it to another device.</td></tr>
+            <tr><td>Import</td><td>Loads a scenario file.</td></tr>
+            <tr><td>Export for players</td><td>Saves a stand-alone file for players to work through without a GM. See <a href="#share">Player files</a>.</td></tr>
+            <tr><td></td><td>Settings</td><td>Boot text, date, colors, GM passphrase, and new or sample scenario.</td></tr>
+          </table>
+        </div>
+
+        <!-- ============================================================ -->
+        <h2 id="files">2. Files and folders</h2>
+        <p>The drive is always <code>C:\</code>. All files and folders sit inside it.</p>
+
+        <h3>Creating files and folders</h3>
+        <p>
+          Right-click an empty part of the file area (long-press on a touch screen) to open a menu
+          with these options:
+        </p>
+        <ul>
+          <li><b>New Folder</b></li>
+          <li><b>New Text File</b>: notes, memos, logs and letters. Players read them with <code>TYPE</code>.</li>
+          <li><b>New Program (.EXE)</b>: a script that plays out when run. See <a href="#scripts">Programs and commands</a>.</li>
+          <li><b>Import Files…</b>: adds files from the computer.</li>
+        </ul>
+        <p>
+          New text files and programs open in the editor immediately. Double-click a file to edit
+          it later.
+        </p>
+
+        <h3>Importing files</h3>
+        <p>Drag files onto the window or onto a folder, or use <b>Import Files…</b>.</p>
+        <ul>
+          <li>Images (JPG, PNG, GIF and similar) become picture files, shown to players as ASCII art. They are scaled down to 800 pixels wide on import.</li>
+          <li>Animated GIFs are converted to ASCII-art frames on import, and play as animations in the terminal. Double-click one to preview it. Very long GIFs keep every second or third frame (at most 120), so the scenario stays small enough to save.</li>
+          <li><code>.txt</code>, <code>.md</code>, <code>.nfo</code>, <code>.log</code> and <code>.asc</code> files become text files.</li>
+          <li><code>.bat</code> and <code>.scr</code> files become programs.</li>
+        </ul>
+        <p>Imported file names are converted to capital letters.</p>
+
+        <h3>Organizing</h3>
+        <ul>
+          <li>Open a folder by double-clicking it, or by clicking it in the sidebar or the path bar.</li>
+          <li>Move an item by dragging it onto a folder in the file area, sidebar or path bar, or with right-click → <b>Move to…</b>.</li>
+          <li>The right-click menu also has <b>Rename…</b>, <b>Duplicate</b> and <b>Delete</b>. Duplicating a folder copies its contents.</li>
+          <li>Names must be unique within a folder. A repeated name gets a number added, e.g. <code>NOTE 2.TXT</code>.</li>
+        </ul>
+
+        <h3>Badges</h3>
+        <p>Symbols under each file show its settings:</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Badge</th><th>Meaning</th></tr>
+            <tr><td>Padlock</td><td>Password protected.</td></tr>
+            <tr><td>Person</td><td>Restricted to one account.</td></tr>
+            <tr><td>Lightning bolt and event name</td><td>Appears when that event fires. Gray while waiting, green once fired.</td></tr>
+            <tr><td>Flame</td><td>Self-destructs after it is read or run.</td></tr>
+            <tr><td>"GIF" tag</td><td>An animated GIF, which plays as ASCII animation.</td></tr>
+            <tr><td>Eye with a line through it</td><td>Hidden from a normal <code>DIR</code> listing. The file also appears faded.</td></tr>
+            <tr><td>"Revealed" tag</td><td>A program revealed it during play.</td></tr>
+            <tr><td>"Destroyed" tag, name crossed out</td><td>It self-destructed or was deleted during play. Players can't see it; the GM workspace still shows it.</td></tr>
+          </table>
+        </div>
+
+        <!-- ============================================================ -->
+        <h2 id="info">3. Get Info: locks and secrets</h2>
+        <p>Right-click a file or folder and choose <b>Get Info…</b> to set its access rules.</p>
+        <dl>
+          <dt>Password (asked when opened)</dt>
+          <dd>
+            Players must enter it before reading, running or opening the item. Capitalization is
+            ignored, so <code>falcon</code> works for <code>FALCON</code>. A correct password keeps
+            the item unlocked for the rest of the session. A password on a folder protects
+            everything inside it.
+          </dd>
+          <dt>Only this user can open it</dt>
+          <dd>
+            Any other account gets <code>Access denied</code>, even with the correct password.
+            Players must <code>LOGIN</code> as that account first.
+          </dd>
+          <dt>Appears when</dt>
+          <dd>
+            "Always there", or one of the scenario's events. Until the event fires, the item is
+            invisible to players: <code>DIR</code> does not list it, and opening it by name returns
+            "File not found". See <a href="#events">Events</a>.
+          </dd>
+          <dt>Hidden from DIR</dt>
+          <dd>
+            <code>DIR</code> leaves it out, but <code>DIR /A</code> lists it, and it can still be
+            opened by name.
+          </dd>
+          <dt>Self-destructs after it is read or run</dt>
+          <dd>
+            Files and programs only. After one read or run, players see
+            <code>*** FILE SELF-DESTRUCTED ***</code> and the file disappears for them. The GM
+            workspace keeps it, marked Destroyed, and Reset session restores it.
+          </dd>
+        </dl>
+        <p>
+          These settings can be combined. For example, a file can be password protected,
+          restricted to <code>DKANE</code>, set to appear with the "Lockdown" event, and set to
+          self-destruct after reading.
+        </p>
+
+        <!-- ============================================================ -->
+        <h2 id="accounts">4. Accounts and mail</h2>
+        <p>Click <b>Accounts</b> to manage logins.</p>
+        <ul>
+          <li>
+            The first account is the guest account. It cannot be deleted, and
+            <code>LOGOUT</code> returns to it. It normally has no password, so players can start
+            without one.
+          </li>
+          <li><b>+ Account</b> adds a login. A blank password means no password.</li>
+          <li>Account passwords ignore capitalization.</li>
+        </ul>
+
+        <h3>Mail</h3>
+        <p>
+          Each account has an inbox. <b>+ Mail</b> adds a message with a sender, subject and body.
+          Players read mail with <code>MAIL</code> while logged in as that account.
+        </p>
+        <p>
+          The "Arrives when" menu on each message works like "Appears when" on files: a message
+          set to an event arrives when that event fires. An event announcement can tell players
+          the message has arrived (see <a href="#recipes">Recipes</a>).
+        </p>
+        <div class="note">
+          <p>
+            Renaming an account breaks files restricted to the old name. Nobody can open them until
+            their Get Info is updated. The Answer key lists every restricted file.
+          </p>
+        </div>
+
+        <!-- ============================================================ -->
+        <h2 id="events">5. Events</h2>
+        <p>
+          Events change the game while it is played. When an event fires, files and mail attached to
+          it appear, and its script runs: a message, a character speaking, or a whole finale. Events
+          can be fired by the players' own actions, so a scenario can run with no GM at all.
+        </p>
+
+        <h3>Creating an event</h3>
+        <ol>
+          <li>Click <b>Events</b>, then <b>+ Event</b>, and give it a name, e.g. <i>Power restored</i>.</li>
+          <li>Optional: write what happens in "When it fires, run". This is a script in the same format as a program (see <a href="#scripts">Programs and commands</a>). A single line such as <code>*** 1 NEW MESSAGE ***</code> is enough for a simple announcement.</li>
+          <li>Optional: add conditions under "Fires when any of these happens" (see below).</li>
+          <li>Optional: tick events under "Only after these have fired".</li>
+          <li>Optional: choose an event in the "Also fires" menu, or set "Fires by itself after" a number of minutes.</li>
+        </ol>
+        <p>
+          Files are attached to an event with "Appears when" in Get Info, and mail with "Arrives
+          when". Under each event, the Events window lists what it unlocks.
+        </p>
+
+        <h3>Conditions</h3>
+        <p><b>+ Condition</b> adds a player action that fires the event. Any one of an event's conditions is enough.</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Condition</th><th>Fires when a player…</th></tr>
+            <tr><td>Logs in as</td><td>logs in to that account with <code>LOGIN</code>.</td></tr>
+            <tr><td>Types</td><td>types that exact phrase, e.g. <code>DIAL 0714</code>. Capitals and extra spaces are ignored.</td></tr>
+            <tr><td>Reads file</td><td>reads that file with <code>TYPE</code> (pictures included).</td></tr>
+            <tr><td>Runs program</td><td>runs that program, after its script has finished.</td></tr>
+            <tr><td>Reads mail</td><td>opens that message with <code>MAIL</code>.</td></tr>
+            <tr><td>Unlocks</td><td>enters the correct password for that file or folder.</td></tr>
+            <tr><td>Enters folder</td><td>moves into that folder with <code>CD</code>.</td></tr>
+          </table>
+        </div>
+        <p>
+          A typed phrase works as a secret command. It never gets "Bad command or file name", and it
+          takes priority over a custom command with the same name. That makes code entry possible:
+          a custom command <code>SHUTDOWN</code> can answer every wrong code, while an event with
+          the condition "Types <code>SHUTDOWN 4471</code>" handles the right one. Once an
+          event has fired, its phrase stops working.
+        </p>
+
+        <h3>Only after</h3>
+        <p>
+          An event with "Only after" ticks waits until those events have fired. Until then its
+          conditions, <code>@trigger</code> lines and timer have no effect, so steps happen in the
+          intended order. For example, typing <code>YES</code> does nothing until a certain file has
+          been read. GM hotkeys and the Fired checkbox ignore this rule.
+        </p>
+
+        <h3>Other ways to fire an event</h3>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Method</th><th>Notes</th></tr>
+            <tr>
+              <td><code>@trigger</code> in a script</td>
+              <td>A line such as <code>@trigger Vault opened</code> in a program, custom command or another event's script. The name must match; capitalization is ignored.</td>
+            </tr>
+            <tr>
+              <td><code>@countdown</code> in a script</td>
+              <td>Fires the event when the countdown runs out. See <a href="#scripts">Programs and commands</a>.</td>
+            </tr>
+            <tr>
+              <td>"Fires by itself after"</td>
+              <td>Fires after that many minutes of play. Play time counts only while player mode is open, and starts from zero each time player mode starts. In a <a href="#share">player file</a> it carries over between visits.</td>
+            </tr>
+            <tr>
+              <td>"Also fires"</td>
+              <td>Fires alongside another event. Chains can be any length; each event fires only once, so a chain cannot loop.</td>
+            </tr>
+            <tr>
+              <td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>1</kbd> to <kbd>9</kbd></td>
+              <td>The GM fires event 1 to 9, in list order, during play. Uses the number keys in the top row, not the number pad; on a Mac, hold Control, not Command. The <b>↑</b> button moves an event up the list and changes its hotkey.</td>
+            </tr>
+            <tr>
+              <td>"Fired" checkbox</td>
+              <td>Fires the event from the GM workspace. Unchecking it reverses this.</td>
+            </tr>
+          </table>
+        </div>
+        <div class="tip">
+          <p>
+            Event scripts run one at a time, after whatever is already running. An event fired in
+            the middle of a program speaks once the program has finished. An event with no script
+            fires without any sign on screen; the Events count in the toolbar and the Activity log
+            show which events have fired and how.
+          </p>
+        </div>
+
+        <h3>Run now</h3>
+        <p>
+          <b>▶ Run now</b>, next to an event's script, plays that script in the terminal straight
+          away, so you can check its timing, sounds and effects without playing up to that point.
+          Nothing in the game changes. Lines that would change it (<code>@trigger</code>,
+          <code>@countdown</code>, <code>@stop</code>, <code>@end</code>, <code>@reveal</code>,
+          <code>@delete</code>) show a dim <code>[TEST]</code> note instead. Questions from
+          <code>@ask</code> wait for your answer as they would for players. Press Enter at the end to
+          return to the Events window. The Commands window has the same button.
+        </p>
+
+        <h3>Event map</h3>
+        <p>
+          <b>Event map</b>, at the bottom of the Events window, draws the whole scenario as a
+          diagram, in the order things can happen when players play with no GM:
+        </p>
+        <ul>
+          <li><b>Columns</b> are steps. Step 1 events can fire from the start; a step 2 event needs something a step 1 event released or fired, and so on. A last column, <b>Never fires without a GM</b>, holds events nothing can reach.</li>
+          <li><b>Boxes</b> are events. Each lists what fires it, its hotkey, and tags for what it does: files and mail it releases, a question, a countdown, sound, and <b>ends the game</b>. Endings have a heavy border. A way that can never happen is shown in red.</li>
+          <li><b>Arrows</b> show what leads to what: one event firing another (<code>@trigger</code>, a countdown, "Also fires"), or releasing the file, program or mail that fires it. A <b>dashed arrow</b> means "Only after".</li>
+          <li>Events with arrows and endings are listed first in each column; side events that lead nowhere sit underneath.</li>
+          <li><b>Click a box</b> to jump to that event in the Events window.</li>
+        </ul>
+        <p>
+          <b>Text version</b> shows the same map as an outline, including the important lines of
+          each script and its <code>@ask</code> branches, ready to copy or save. Passwords count as
+          solvable in the map; to check that each password has a clue, see the Clue check at the
+          end of the <a href="#play">answer key</a>.
+        </p>
+
+        <h3>Deleting an event</h3>
+        <p>
+          If files or mail are attached, a confirmation appears first. The attached items change to
+          "Always there".
+        </p>
+        <div class="note">
+          <p>
+            Scenarios from older versions that used numbered rounds are converted automatically
+            into events named <i>Round 1</i>, <i>Round 2</i> and so on. Each round event also fires
+            the ones before it, so they behave as the rounds did. They can be renamed freely.
+          </p>
+        </div>
+
+        <!-- ============================================================ -->
+        <h2 id="scripts">6. Programs and custom commands</h2>
+        <p>
+          Programs (<code>.EXE</code> files) and custom commands are short scripts that run line by
+          line. Typical uses include fake hacking tools and decryption sequences.
+        </p>
+
+        <h3>Script syntax</h3>
+        <p>Each plain line prints to the screen in turn. Lines that begin with <code>@</code> are instructions:</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Instruction</th><th>Effect</th></tr>
+            <tr><td><code>@wait 800</code></td><td>Pauses for the given number of milliseconds (1000 = one second). With no number, the pause is half a second.</td></tr>
+            <tr><td><code>@progress Label</code></td><td>Draws a progress bar that fills from 0 to 100%, e.g. <code>DECRYPTING [##########..........] 50%</code>.</td></tr>
+            <tr><td><code>@clear</code></td><td>Clears the screen.</td></tr>
+            <tr><td><code>@slow Text</code></td><td>Types the text out letter by letter, in a slightly brighter color. Good for a character talking to the players.</td></tr>
+            <tr><td><code>@speak Text</code></td><td>Like <code>@slow</code>, but the browser also reads the text aloud in a flat, robotic voice. The script continues once the voice has finished.</td></tr>
+            <tr><td><code>@sound alarm</code></td><td>Plays a sound effect (see <a href="#sounds">Sounds</a>). The script continues once the sound has finished, unless an effect on the next line plays alongside it (see below).</td></tr>
+            <tr><td><code>@flash</code></td><td>Flashes the screen white. <code>@flash red</code> or <code>@flash #00ff00</code> flashes another color.</td></tr>
+            <tr><td><code>@shake</code></td><td>Shakes the screen for half a second. <code>@shake 1500</code> shakes for 1.5 seconds.</td></tr>
+            <tr><td><code>@glitch</code></td><td>Distorts the screen and scrambles the last few lines for 0.7 seconds, then puts them back. <code>@glitch 2000</code> lasts 2 seconds.</td></tr>
+            <tr><td><code>@theme Red alert</code></td><td>Switches the terminal to another theme, by name, for the rest of the game. <code>@theme default</code> switches back. See <a href="#settings">Themes</a>.</td></tr>
+            <tr><td><code>@play FOLDER\FILE.GIF</code></td><td>Plays an animated GIF once. <code>@play CAMERA.GIF 3</code> plays it three times. A still picture is simply shown.</td></tr>
+            <tr><td><code>@notify Message</code></td><td>Sends the message to your Discord channel, so you hear when players reach a point in the game, even from a player file you sent out. See <a href="#notify">GM notifications</a>.</td></tr>
+            <tr><td><code>@ask Question?</code></td><td>Waits for the players to type an answer. See <a href="#ask">Questions and answers</a>.</td></tr>
+            <tr><td><code>@countdown 60 Event name | LABEL</code></td><td>Starts a bar above the prompt that fills over 60 seconds while players keep typing. When it reaches 100%, the named event fires. The label after <code>|</code> is optional.</td></tr>
+            <tr><td><code>@stop</code></td><td>Stops a running countdown, marking it HALTED.</td></tr>
+            <tr><td><code>@end</code></td><td>Ends the game. Only <code>RESTART</code> works afterwards in a player file; in GM mode, only <code>GMMODE</code>.</td></tr>
+            <tr><td><code>@trigger Event name</code></td><td>Fires an event. See <a href="#events">Events</a>.</td></tr>
+            <tr><td><code>@reveal FOLDER\FILE</code></td><td>Makes a file visible even if it is hidden or its event has not fired.</td></tr>
+            <tr><td><code>@delete FOLDER\FILE</code></td><td>Removes a file or folder from the players' computer. The GM workspace keeps it, marked Destroyed.</td></tr>
+          </table>
+        </div>
+        <p>
+          Paths for <code>@reveal</code>, <code>@delete</code> and <code>@play</code> start at the
+          top of the drive and include the file extension: <code>SECURITY\INCIDENT.LOG</code>.
+          <code>C:\</code> at the front is optional.
+        </p>
+
+        <p>
+          Sound and screen-effect lines (<code>@sound</code>, <code>@flash</code>,
+          <code>@shake</code>, <code>@glitch</code>) placed directly one after another happen at the
+          same time, and the script continues once the longest has finished. A single one on its
+          own line finishes before the next line runs. For a siren while the screen shakes:
+        </p>
+        <pre class="crt">@sound alarm
+@shake 1800
+MISSILE LAUNCH DETECTED.</pre>
+
+        <h3 id="ask">Questions and answers</h3>
+        <p>
+          <code>@ask</code> puts its question on the prompt line and waits for the players to type an
+          answer. <code>@if</code> lists the answer to watch for; its lines run only if the players
+          gave it. Lines after <code>@else</code> run for any other answer. <code>@endif</code>
+          closes the branch.
+        </p>
+        <pre class="crt">@slow i can open the vault for you.
+@ask TRUST ME? (Y/N)
+@if YES, Y
+@slow good. you won't regret this.
+@trigger Vault opened
+@else
+@slow then you'll stay here. with me.
+@sound alarm
+@endif</pre>
+        <ul>
+          <li>Capitals and extra spaces in the answer are ignored. List several accepted answers with commas: <code>@if YES, Y, SURE</code>.</li>
+          <li><code>@else</code> is optional. Without it, any other answer simply skips the <code>@if</code> lines.</li>
+          <li>A branch can contain another <code>@ask</code> with its own <code>@if</code> … <code>@endif</code>.</li>
+          <li>Each answer is written to the Activity log.</li>
+        </ul>
+
+        <h3 id="notify">GM notifications</h3>
+        <p>
+          <code>@notify</code> sends a short message to a Discord channel of yours. It's most useful
+          with player files: you send a game to remote players and get a ping when they reach the
+          vault or an ending.
+        </p>
+        <ol>
+          <li>In Discord, open the channel's settings: <b>Integrations → Webhooks → New Webhook</b>, then <b>Copy Webhook URL</b>. Webhooks need a server, but a private server with only you in it works.</li>
+          <li>In the kit, open <b>Settings</b>, paste the link into <b>GM notifications</b> and click <b>Send test message</b>.</li>
+          <li>Add lines such as <code>@notify Someone opened the vault</code> to any script. <code>{answer}</code> inserts the last <code>@ask</code> answer, e.g. <code>@ask YOUR NAME?</code> then <code>@notify {answer} reached the vault</code>.</li>
+        </ol>
+        <ul>
+          <li>Messages are free and there is no monthly limit. Discord limits only the speed, far above what a game sends.</li>
+          <li>Offline, a message waits and is sent when the player is back online, marked with the time it happened.</li>
+          <li>In your own player mode, messages are marked "(GM test)". Run now only shows a <code>[TEST]</code> note.</li>
+          <li>Player files that use <code>@notify</code> tell players, when they start, that the game sends progress updates to its creator.</li>
+          <li>The link goes into player files but is left out of <b>Export</b>, so a scenario file you share never carries it. Someone digging through a player file's code could still find it; if it is ever misused, delete the webhook in Discord and make a new one.</li>
+        </ul>
+
+        <h3 id="sounds">Sounds</h3>
+        <p>
+          Sounds are made by the browser as it plays, so a scenario carries no audio files and works
+          offline. Browsers only allow sound after the first key press, which means the boot screen
+          is always silent. Players can type <code>SOUND OFF</code> to mute sounds and the
+          <code>@speak</code> voice.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Sound</th><th>What it is</th></tr>
+            <tr><td><code>beep</code>, <code>boot</code></td><td>PC speaker beeps</td></tr>
+            <tr><td><code>error</code></td><td>A low error buzz</td></tr>
+            <tr><td><code>alert</code>, <code>chirp</code>, <code>tick</code></td><td>Short alert chirps and a single tick, e.g. for a countdown</td></tr>
+            <tr><td><code>success</code>, <code>fail</code></td><td>A rising jingle and a falling one</td></tr>
+            <tr><td><code>alarm</code>, <code>klaxon</code></td><td>A rising and falling siren, and a pulsing klaxon</td></tr>
+            <tr><td><code>static</code>, <code>glitch</code></td><td>A burst of static, and digital crackle</td></tr>
+            <tr><td><code>keys</code></td><td>A burst of key clicks</td></tr>
+            <tr><td><code>powerup</code>, <code>powerdown</code></td><td>A machine powering up or winding down</td></tr>
+            <tr><td><code>dialtone</code>, <code>ring</code>, <code>busy</code></td><td>Telephone tones</td></tr>
+            <tr><td><code>dial 5550714</code></td><td>Touch-tone dialing of the digits given</td></tr>
+            <tr><td><code>modem</code></td><td>A dial-up modem connecting (about 3 seconds)</td></tr>
+          </table>
+        </div>
+        <p>
+          Run now plays a misspelled sound name as a <code>[TEST]</code> note, so typos are easy to
+          catch.
+        </p>
+
+        <h3>Example</h3>
+        <p>Script for <code>OVERRIDE.EXE</code>:</p>
+        <pre class="crt">CONNECTING TO MAINFRAME...
+@wait 1200
+@progress BYPASSING FIREWALL
+SECURITY OVERRIDE ACCEPTED.
+@trigger Doors unlocked
+@delete SECURITY\CAMERA.LOG</pre>
+        <p>
+          Running it prints the first line and pauses for 1.2 seconds. It then shows a progress bar
+          and the success line, fires <i>Doors unlocked</i>, and deletes
+          <code>SECURITY\CAMERA.LOG</code>.
+        </p>
+
+        <h3>Running programs</h3>
+        <p>
+          Players type <code>RUN OVERRIDE</code>, or the program name on its own
+          (<code>OVERRIDE</code> or <code>OVERRIDE.EXE</code>). Passwords, user restrictions and
+          self-destruct apply to programs in the same way as to files.
+        </p>
+
+        <h3>Custom commands</h3>
+        <p>
+          <b>Commands</b> adds words that players can type from any folder, such as
+          <code>PANIC</code> or <code>XYZZY</code>. Each command runs a script in the same format as
+          a program.
+        </p>
+        <ul>
+          <li>Commands with "In HELP" checked are listed by <code>HELP</code>. Unchecked commands stay secret.</li>
+          <li>A custom command with the same name as a built-in one, e.g. <code>DATE</code>, replaces it.</li>
+          <li>Text typed after the command name is ignored.</li>
+          <li><b>▶ Run now</b> plays the command's script straight away, as for events (see <a href="#events">Run now</a>).</li>
+        </ul>
+
+        <!-- ============================================================ -->
+        <h2 id="play">7. Running a game</h2>
+        <ol>
+          <li>Export the scenario as a backup (see <a href="#saving">Saving</a>).</li>
+          <li>Choose the starting account in the "Start as" menu, usually the guest account.</li>
+          <li>Click <b>Player mode</b>. The boot text plays, then the prompt appears.</li>
+        </ol>
+        <p>
+          Players type commands and press Enter. Clicking the screen returns focus to the command
+          line, and the up and down arrow keys recall earlier commands.
+        </p>
+
+        <h3>During play</h3>
+        <ul>
+          <li><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>1</kbd> to <kbd>9</kbd> fires events.</li>
+          <li>
+            Typing <code>GMMODE</code> or pressing <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd>
+            returns to the GM workspace. Starting player mode again restarts the terminal: players
+            are logged out, unlocked passwords are forgotten and the screen clears. To change
+            things mid-game without a restart, use events.
+          </li>
+          <li>
+            A GM passphrase, set in <b>Settings</b>, stops players leaving player mode.
+            <code>GMMODE</code> then asks for it, and a wrong entry shows the normal "Bad command or
+            file name". Unlike other passwords, the passphrase is case-sensitive.
+          </li>
+        </ul>
+
+        <h3>Activity log and answer key</h3>
+        <p>
+          <b>Activity</b> shows a timestamped list of player commands, files read, programs run,
+          wrong password guesses and fired events. It keeps the latest 400 entries.
+        </p>
+        <p>
+          <b>Answer key</b> lists accounts, passwords, restricted and hidden files, self-destructing
+          files, programs, and each event with what it unlocks. <b>Copy</b> and <b>Save file…</b>
+          keep a copy. The Clue check section at the end lists passwords that appear in no file,
+          mail or script. Players can only learn those from a handout or from the GM.
+        </p>
+
+        <!-- ============================================================ -->
+        <h2 id="players">8. Player command reference</h2>
+        <p>Commands are not case-sensitive.</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Command</th><th>Effect</th></tr>
+            <tr><td><code>HELP</code></td><td>Lists the commands, plus custom commands with "In HELP" checked.</td></tr>
+            <tr><td><code>DIR</code></td><td>Lists the current folder. Password-protected files are marked <code>*</code>. <code>LS</code> does the same.</td></tr>
+            <tr><td><code>DIR /A</code></td><td>Also lists hidden files.</td></tr>
+            <tr><td><code>DIR folder</code></td><td>Lists another folder without moving to it.</td></tr>
+            <tr><td><code>CD folder</code></td><td>Moves into a folder. <code>CD ..</code> goes up one level, <code>CD \</code> goes to the top, and <code>CD</code> alone shows the current folder.</td></tr>
+            <tr><td><code>TYPE file</code></td><td>Shows a text file, or an image as ASCII art. An animated GIF plays until a key is pressed. <code>CAT</code> does the same.</td></tr>
+            <tr><td><code>RUN program</code></td><td>Runs a program. Typing the program's name also works.</td></tr>
+            <tr><td><code>FIND text</code></td><td>Searches the text files the player can currently read and shows matching lines. Hidden and password-protected files are skipped.</td></tr>
+            <tr><td><code>LOGIN name</code></td><td>Logs in, asking for the password if the account has one.</td></tr>
+            <tr><td><code>LOGOUT</code></td><td>Returns to the guest account. <code>EXIT</code> does the same.</td></tr>
+            <tr><td><code>WHOAMI</code></td><td>Shows the logged-in account.</td></tr>
+            <tr><td><code>SOUND OFF</code> / <code>SOUND ON</code></td><td>Mutes or unmutes sounds and the speaking voice. The choice is remembered in that browser.</td></tr>
+            <tr><td><code>MAIL</code></td><td>Lists the logged-in account's messages. <code>MAIL 2</code> reads message 2.</td></tr>
+            <tr><td><code>CLS</code></td><td>Clears the screen.</td></tr>
+            <tr><td><code>DATE</code> / <code>VER</code></td><td>Shows the date set in Settings / the scenario title.</td></tr>
+            <tr><td><code>ECHO text</code></td><td>Prints the text back.</td></tr>
+          </table>
+        </div>
+        <p>
+          Paths use DOS style: <code>TYPE PUBLIC\ROSTER.TXT</code>, <code>CD \PUBLIC</code>. Forward
+          slashes also work, and the extension can usually be left off: <code>TYPE ROSTER</code>.
+        </p>
+        <pre class="crt"><span class="dim">C:\&gt;</span>DIR
+ Volume in drive C is KESTREL STA
+ Directory of C:\
+
+MEDIA           &lt;DIR&gt;        03-14-2087
+PUBLIC          &lt;DIR&gt;        03-14-2087
+SECURITY        &lt;DIR&gt;        03-14-2087
+OVERRIDE.EXE         333    03-14-2087  *
+README.TXT          1262    03-14-2087
+
+   2 file(s)  1595 bytes
+   410405 bytes free
+   (* = password protected)
+<span class="dim">C:\&gt;</span>CD SECURITY
+PASSWORD: *****
+<span class="dim">C:\SECURITY&gt;</span></pre>
+
+        <!-- ============================================================ -->
+        <h2 id="after">9. Between sessions: Reset session</h2>
+        <p>
+          Changes made during a game stay in the scenario afterwards, including self-destructed
+          files and fired events. <b>Reset session</b> returns the scenario to its starting state
+          and first lists what it will change:
+        </p>
+        <ul>
+          <li>Restores destroyed and deleted files.</li>
+          <li>Undoes program reveals.</li>
+          <li>Turns fired events off (this option can be unchecked).</li>
+          <li>Optionally clears the Activity log.</li>
+        </ul>
+        <p>
+          Files, accounts, mail, commands and settings are not affected. To restore a single file
+          instead, open its Get Info and uncheck "Destroyed during play" or "Revealed by a
+          program".
+        </p>
+
+        <!-- ============================================================ -->
+        <h2 id="settings">10. Settings and themes</h2>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Setting</th><th>Effect</th></tr>
+            <tr><td>Scenario title</td><td>Shown on the boot screen and by <code>VER</code>. The first 11 characters become the drive's volume name in <code>DIR</code>.</td></tr>
+            <tr><td>Header line</td><td>Optional line shown after boot, such as a company or agency name.</td></tr>
+            <tr><td>Date</td><td>Shown by <code>DIR</code> and <code>DATE</code>. Any format works, e.g. <code>10-14-1987</code> or <code>2077.03.01</code>.</td></tr>
+            <tr><td>Boot text</td><td>Lines that type out when player mode starts. Blank lines are kept.</td></tr>
+            <tr><td>GM passphrase</td><td>Required to leave player mode. Blank means no passphrase.</td></tr>
+            <tr><td>Skip boot sequence</td><td>Goes straight to the prompt.</td></tr>
+            <tr><td>Custom colors</td><td>Any text and background color. The preview box shows the result. Saving changed colors switches the theme to "Custom colors".</td></tr>
+          </table>
+        </div>
+        <p>
+          The Theme menu in the toolbar sets the whole look of the terminal: colors, screen font,
+          cursor, and how much CRT glow, scanlines and curved glass the screen has.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Theme</th><th>Look</th></tr>
+            <tr><td>80s green CRT</td><td>Glowing green on a curved monitor with scanlines and a block cursor. The default.</td></tr>
+            <tr><td>Amber terminal</td><td>The same monitor in amber.</td></tr>
+            <tr><td>DOS PC</td><td>Gray text on black, a flatter screen and a blinking underscore cursor.</td></tr>
+            <tr><td>PC blue</td><td>Light text on bright blue, like a DOS utility.</td></tr>
+            <tr><td>80s home computer</td><td>Capital letters, lavender on purple, with a wide colored border around the screen.</td></tr>
+            <tr><td>Military teletype</td><td>Capitals typed on a paper roll with tractor-feed holes. Characters speaking print in red ink.</td></tr>
+            <tr><td>90s corporate</td><td>A clean, flat office screen: dark text on light gray, no glow.</td></tr>
+            <tr><td>Cyberpunk</td><td>Neon cyan on deep purple with color fringing. Characters speak in hot pink.</td></tr>
+            <tr><td>Paper white, Ice cyan, Neon magenta, Red alert</td><td>The green CRT monitor in other colors. Red alert suits a countdown, e.g. <code>@theme Red alert</code>.</td></tr>
+            <tr><td>Custom colors</td><td>The green CRT monitor with the colors chosen in Settings.</td></tr>
+          </table>
+        </div>
+        <p>
+          The 80s home computer and Military teletype themes show everything in capitals. This only
+          changes how text looks: commands, passwords and answers ignore capitals anyway. Avoid them
+          for clues that depend on capital letters (such as "the capitals spell the password") or
+          for a character whose lowercase speech is part of their voice.
+        </p>
+        <p>
+          A script can change the theme mid-game with <code>@theme</code>. In a player file, the
+          change is remembered if the player reloads.
+        </p>
+        <p>
+          <b>New blank scenario</b> and <b>Load sample</b> in Settings replace the current
+          scenario, so export it first.
+        </p>
+
+        <!-- ============================================================ -->
+        <h2 id="saving">11. Saving, Export and Import</h2>
+        <p>
+          The kit saves automatically to the browser it is running in. Nothing is sent over the
+          internet. As a result:
+        </p>
+        <ul>
+          <li>Each browser keeps a separate copy. A scenario built in Chrome does not appear in Safari.</li>
+          <li>Clearing the browser's history or site data can erase it.</li>
+          <li>Private and incognito windows discard it when they close.</li>
+        </ul>
+        <p>
+          <b>Export</b> saves the scenario as a <code>.json</code> file, which can be kept as a
+          backup or moved to another computer. <b>Import</b> loads a <code>.json</code> file and
+          replaces the open scenario. Exports do not include the Activity log.
+        </p>
+        <div class="tip">
+          <p>Export before each game. The export file is the only backup.</p>
+        </div>
+
+        <h3>Storage warning</h3>
+        <p>
+          Browsers allow each page a few megabytes of storage, and large images fill it fastest.
+          When a save fails, a red banner appears below the toolbar.
+        </p>
+        <p>
+          The scenario is still complete in the open page. <b>Export now</b> in the banner saves a
+          copy. Deleting or replacing large images frees space, and smaller, simpler images also
+          convert to clearer ASCII art. The banner disappears once saving works again. Closing or
+          reloading the page before exporting loses any unsaved changes.
+        </p>
+
+        <!-- ============================================================ -->
+        <h2 id="share">12. Player files</h2>
+        <p>
+          <b>Export for players</b> saves a separate HTML file for players to work through on their
+          own, without a GM. The file opens straight into the terminal and has no GM workspace.
+        </p>
+
+        <h3>Before exporting</h3>
+        <p>Test the whole scenario in player mode first. The export window then checks for two problems:</p>
+        <ul>
+          <li>
+            Events nothing can fire. Without a GM, an event only fires from <code>@trigger</code>
+            in a program or command, from a timer, or from another event's "Also fires". The window
+            lists each such event and what it would unlock.
+          </li>
+          <li>
+            Passwords with no clue. These are passwords that appear in no file, mail or script, so
+            players can only learn them if they are sent separately.
+          </li>
+        </ul>
+        <p>
+          Either can be fixed in the scenario, or ignored with <b>Export anyway</b>, for example when
+          the passwords go out with the file. "Players start as" sets the account players begin
+          with.
+        </p>
+
+        <h3>What the file contains</h3>
+        <ul>
+          <li>
+            The scenario in its starting state. Fired events, destroyed files and reveals from test
+            runs are left out, and so are the GM passphrase and the Activity log.
+          </li>
+          <li>
+            Files and folders with a password are encrypted with that password. Their contents
+            cannot be read from the file without it. Account passwords are stored only in a one-way
+            scrambled form.
+          </li>
+          <li>
+            Everything else (hidden files, files waiting for an event, mail and commands) is
+            scrambled. It cannot be read in a text editor, but someone who can read code could
+            decode it.
+          </li>
+        </ul>
+
+        <h3>For players</h3>
+        <ul>
+          <li>
+            Progress saves automatically in the player's browser: location, login, unlocked
+            passwords, fired events and destroyed files. Opening the file again continues the game.
+          </li>
+          <li><code>RESTART</code>, confirmed with <code>RESTART YES</code>, starts the game over. After an ending, <code>RESTART</code> alone does it, and reopening the file also starts fresh.</li>
+          <li>A running countdown is saved too, so reloading the page does not escape it.</li>
+          <li><code>GMMODE</code> and the GM hotkeys do nothing.</li>
+          <li>Each export is a new file. Progress made in an earlier export does not carry over.</li>
+        </ul>
+        <div class="note">
+          <p>
+            The file needs to be opened directly from the computer, or from a web address starting
+            with <code>https://</code>. Other web addresses block the encryption, and passwords
+            cannot be checked.
+          </p>
+        </div>
+
+        <!-- ============================================================ -->
+        <h2 id="recipes">13. Recipes</h2>
+
+        <div class="recipe">
+          <h3>Puzzle chain</h3>
+          <p>A password leads to a program, which releases the next clue.</p>
+          <ol>
+            <li>Create the event <i>Vault opened</i>.</li>
+            <li>Set <code>VAULT.TXT</code> to appear when <i>Vault opened</i> fires.</li>
+            <li>Give <code>CRACK.EXE</code> a password, and put that password in another file.</li>
+            <li>End the <code>CRACK.EXE</code> script with <code>@trigger Vault opened</code>.</li>
+          </ol>
+        </div>
+
+        <div class="recipe">
+          <h3>Mail on cue</h3>
+          <p>A message arrives at a moment the GM chooses.</p>
+          <ol>
+            <li>Create the event <i>The call</i> with the announcement <code>*** 1 NEW MESSAGE ***</code>.</li>
+            <li>Add a message to the right account and set its "Arrives when" menu to <i>The call</i>.</li>
+            <li>Move the event to the top of the list, so its hotkey is <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>1</kbd>.</li>
+            <li>Press the hotkey at that point in the story.</li>
+          </ol>
+        </div>
+
+        <div class="recipe">
+          <h3>Race against the clock</h3>
+          <p>A finale where players must type a code before a countdown runs out.</p>
+          <ol>
+            <li>Create the event <i>Too late</i>, with a script describing the bad ending and ending with <code>@end</code>.</li>
+            <li>Create the event <i>Saved</i> with the condition "Types <code>SHUTDOWN 4471</code>" and a script that starts with <code>@stop</code>, describes the good ending and ends with <code>@end</code>.</li>
+            <li>In the program or event that starts the finale, add <code>@countdown 60 Too late | REACTOR CRITICAL</code>.</li>
+            <li>Optional: a custom command <code>SHUTDOWN</code> that prints <code>CODE REJECTED</code> answers wrong codes.</li>
+          </ol>
+        </div>
+
+        <div class="recipe">
+          <h3>Burn after reading</h3>
+          <p>
+            In a text file's Get Info, check "Self-destructs after it is read or run". The file can
+            be read once, after which it is gone for players.
+          </p>
+        </div>
+
+        <div class="recipe">
+          <h3>Erasing evidence</h3>
+          <p>A custom command, <code>WIPE</code>, that deletes a log and alerts security:</p>
+          <pre class="crt">@progress ERASING LOGS
+@delete SECURITY\ACCESS.LOG
+LOGS ERASED.
+@trigger Security alerted</pre>
+        </div>
+
+        <div class="recipe">
+          <h3>Hidden bonus clue</h3>
+          <p>
+            Set a file to "Hidden from DIR". Players who use <code>DIR /A</code>, or who guess the
+            file name, can find it.
+          </p>
+        </div>
+
+        <div class="recipe">
+          <h3>Two groups, one computer</h3>
+          <p>
+            Give each group its own account, with private files ("Only this user can open it") and
+            separate mail. "Start as" sets which group begins, and <code>LOGIN</code> switches
+            between them.
+          </p>
+        </div>
+
+        <!-- ============================================================ -->
+        <h2 id="help">14. Troubleshooting</h2>
+        <dl>
+          <dt>Scenario missing</dt>
+          <dd>
+            Check that the browser is the one the scenario was built in, and not a private window.
+            If the browser's data was cleared, Import the most recent export.
+          </dd>
+
+          <dt>File not visible to players</dt>
+          <dd>
+            Check the Get Info of the file and of each folder above it. Possible causes are an event
+            that has not fired, "Hidden from DIR" (<code>DIR /A</code> lists it), a restriction to
+            another account, or Destroyed status. The file's badges show each of these.
+          </dd>
+
+          <dt>Hotkey has no effect</dt>
+          <dd>
+            Hotkeys only work in player mode, only for the first nine events, and only once per
+            event. They use the top-row number keys, with Control (not Command) on a Mac. An event
+            with no announcement fires silently; the Events count shows whether it fired.
+          </dd>
+
+          <dt><code>@reveal</code>, <code>@delete</code>, <code>@play</code> or <code>@trigger</code> has no effect</dt>
+          <dd>
+            For <code>@reveal</code>, <code>@delete</code> and <code>@play</code>, give the full path
+            from the top of the drive, with the extension: <code>SECURITY\INCIDENT.LOG</code>.
+            For <code>@trigger</code>, the event name must match the one in the Events window;
+            capitalization is ignored. In all of them, the <code>@</code> must be the first
+            character on the line. <b>Run now</b> shows what a script does, line by line.
+          </dd>
+
+          <dt>A custom command stopped responding</dt>
+          <dd>
+            An event's "Types" phrase starting with the same word takes priority while that event is
+            waiting to fire. The custom command answers again once the event has fired, or for any
+            other text typed after the command name.
+          </dd>
+
+          <dt><code>FIND</code> misses a file</dt>
+          <dd>
+            <code>FIND</code> skips hidden and password-protected files by design, so it cannot be
+            used to bypass puzzles.
+          </dd>
+
+          <dt>Cannot leave player mode</dt>
+          <dd>
+            Type <code>GMMODE</code> and enter the passphrase exactly, including capitals.
+            Reloading the page also works: it always opens in the GM workspace, and the scenario is
+            kept.
+          </dd>
+
+          <dt>Terminal font looks different</dt>
+          <dd>
+            The terminal fonts load from Google Fonts. Without an internet connection the kit uses a
+            font already on the computer instead, and everything else works the same.
+          </dd>
+
+          <dt>No sound or voice</dt>
+          <dd>
+            Check that the computer isn't muted and that players haven't typed
+            <code>SOUND OFF</code> (<code>SOUND ON</code> turns it back on). Sounds only start after
+            the first key press. The <code>@speak</code> voice depends on the voices installed on
+            the computer, so it sounds different on Mac, Windows and phones; where no voice is
+            available, the text is still typed out.
+          </dd>
+
+          <dt>Player file says passwords cannot be checked</dt>
+          <dd>
+            The file was opened from a web address that does not start with
+            <code>https://</code>. Download it and open it directly from the computer instead.
+          </dd>
+
+          <dt>Restricted files no longer open</dt>
+          <dd>
+            The account they are restricted to was probably renamed. Update the files' Get Info to
+            the new name.
+          </dd>
+        </dl>
+
+        <!-- ============================================================ -->
+        <h2 id="keys">15. Keyboard shortcuts</h2>
+        <h3>GM workspace</h3>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Keys</th><th>Action</th></tr>
+            <tr><td>Double-click</td><td>Open a file or folder</td></tr>
+            <tr><td>Right-click or long-press</td><td>Menu for a file, or for the current folder</td></tr>
+            <tr><td><kbd>Enter</kbd></td><td>Open the selected item</td></tr>
+            <tr><td><kbd>Delete</kbd> / <kbd>Backspace</kbd></td><td>Delete the selected item, after a confirmation</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>Close a menu or window</td></tr>
+          </table>
+        </div>
+        <h3>Player mode</h3>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Keys</th><th>Action</th></tr>
+            <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>1</kbd> to <kbd>9</kbd></td><td>Fire event 1 to 9 without leaving the terminal</td></tr>
+            <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd></td><td>Return to the GM workspace (asks for the passphrase if one is set)</td></tr>
+            <tr><td><kbd>↑</kbd> / <kbd>↓</kbd></td><td>Previous / next command</td></tr>
+            <tr><td>Any key</td><td>Stop an animated GIF started with <code>TYPE</code></td></tr>
+          </table>
+        </div>
+
+        <footer>
+          GM Terminal Kit is not affiliated with, endorsed by or sponsored by Microsoft, Apple or
+          any other company.
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>

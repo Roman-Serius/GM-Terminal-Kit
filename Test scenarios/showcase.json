@@ -1,0 +1,413 @@
+{
+ "meta": {
+  "title": "KESTREL STATION",
+  "date": "03-14-2087",
+  "theme": "green",
+  "fg": "#33ff66",
+  "bg": "#050805",
+  "boot": "KESTREL STATION BIOS v4.0\nMEMORY CHECK ... 640K OK\nLIFE SUPPORT ... NOMINAL\nREACTOR ... NOMINAL\nLOADING SYSTEM ...",
+  "org": "KESTREL STATION - MAINTENANCE TERMINAL",
+  "gmPass": "",
+  "skipBoot": false
+ },
+ "events": [
+  {
+   "id": "3yvbgdm",
+   "name": "Sticky found",
+   "announce": "@sound beep\n[KIT] STICKY.TXT is a hidden file: DIR skips it, DIR /A shows it.\n[KIT] Reading it fired an event, which is how this message appeared.",
+   "also": "",
+   "afterMinutes": 0,
+   "when": [
+    {
+     "type": "read",
+     "target": "2ihz0cs"
+    }
+   ],
+   "after": [],
+   "fired": false
+  },
+  {
+   "id": "tz26yh5",
+   "name": "Chen logs in",
+   "announce": "@sound chirp\n*** 1 NEW MESSAGE ***\n[KIT] Logging in as CHEN fired an event, and the event delivered new mail. Type MAIL.",
+   "also": "",
+   "afterMinutes": 0,
+   "when": [
+    {
+     "type": "login",
+     "target": "CHEN"
+    }
+   ],
+   "after": [],
+   "fired": false
+  },
+  {
+   "id": "004qkg0",
+   "name": "Security opened",
+   "announce": "@wait 300\n[KIT] SECURITY is password protected. Its password came from mail: a clue the GM planted.",
+   "also": "",
+   "afterMinutes": 0,
+   "when": [
+    {
+     "type": "unlock",
+     "target": "0g4whl1"
+    }
+   ],
+   "after": [],
+   "fired": false
+  },
+  {
+   "id": "ukbfb36",
+   "name": "Eyes only read",
+   "announce": "@wait 600\n@glitch 600\n[KIT] That file could only be opened by CHEN, and it self-destructed after one read.\n[KIT] In the GM workspace, Reset session brings it back.",
+   "also": "",
+   "afterMinutes": 0,
+   "when": [
+    {
+     "type": "read",
+     "target": "bsi10m6"
+    }
+   ],
+   "after": [],
+   "fired": false
+  },
+  {
+   "id": "q5pfu8g",
+   "name": "Doors unlocked",
+   "announce": "[KIT] OVERRIDE asked a question (@ask), deleted CAMERA.LOG (@delete),\n[KIT] revealed a hidden manual (@reveal) and fired this event (@trigger).\n@wait 2500\n@theme Red alert\n@sound klaxon\n@flash red\n@shake 900\n*** REACTOR OVERLOAD ***\n@speak Warning. Reactor overload. Enter the emergency shutdown code.\n@countdown 90 Meltdown | REACTOR\n[KIT] A countdown is running. The code is somewhere on this drive. Try FIND SHUTDOWN.",
+   "also": "",
+   "afterMinutes": 0,
+   "when": [],
+   "after": [],
+   "fired": false
+  },
+  {
+   "id": "nbcbcl2",
+   "name": "Reactor safe",
+   "announce": "@stop\n@theme default\n@sound powerdown\nREACTOR SHUTDOWN COMPLETE.\n@sound success\n@slow Kestrel Station is safe. Well done, engineer.\n\n[KIT] Typing the exact phrase SHUTDOWN 4471 fired this ending. A custom command\n[KIT] named SHUTDOWN answers every wrong code.\n[KIT] That is the whole showcase. Type GMMODE to see how it was built.\n@end",
+   "also": "",
+   "afterMinutes": 0,
+   "when": [
+    {
+     "type": "type",
+     "target": "SHUTDOWN 4471"
+    }
+   ],
+   "after": [
+    "q5pfu8g"
+   ],
+   "fired": false
+  },
+  {
+   "id": "hnmpvll",
+   "name": "Meltdown",
+   "announce": "@sound static\n@glitch 2000\n@sound powerdown\n@clear\n@wait 1500\nREACTOR MELTDOWN. KESTREL STATION LOST.\n\n[KIT] The countdown ran out and fired this ending. To try again, type GMMODE\n[KIT] and click Reset session.\n@end",
+   "also": "",
+   "afterMinutes": 0,
+   "when": [],
+   "after": [],
+   "fired": false
+  },
+  {
+   "id": "jnvo9zl",
+   "name": "Hint",
+   "announce": "@sound alert\n[KIT] This hint fired by itself after 4 minutes of play (a timer event).\n[KIT] Stuck? Try CD PUBLIC, then DIR /A.",
+   "also": "",
+   "afterMinutes": 4,
+   "when": [],
+   "after": [],
+   "fired": false
+  }
+ ],
+ "nodes": {
+  "zk06tui": {
+   "id": "zk06tui",
+   "name": "README.TXT",
+   "kind": "txt",
+   "parent": null,
+   "content": "KESTREL STATION - GM TERMINAL KIT SHOWCASE\n\nThis drive is a short game that shows off what GM Terminal Kit can do.\nWhenever you use a feature, a line starting with [KIT] explains it.\n\nPLAY\n  Your goal: get into the SECURITY folder and run the OVERRIDE program.\n  Useful commands: DIR, DIR /A, CD <folder>, TYPE <file>, LOGIN <name>,\n  MAIL, FIND <text>, RUN <program>. Type HELP for the full list.\n  Start by looking around: CD PUBLIC\n\nFEATURE REELS (no puzzle, just watch and listen)\n  SOUNDS   every sound effect\n  VOICE    the speaking voice\n  EFFECTS  flash, shake and glitch\n  THEMES   every look the terminal can have\n  ASK      a question with branching answers\n  GIF      an animated GIF as ASCII art\n  ALL      all of the above\n\nBEHIND THE SCENES\n  Type GMMODE (or press Ctrl+Shift+G) to open the GM workspace, where\n  this whole game was built without code:\n  - Events, then Event map: how every step is wired together.\n  - Answer key: every password and what it opens.\n  - Double-click OVERRIDE.EXE to read its script.\n  - Reset session puts everything back so you can play again.\n  Then click Settings > New blank scenario and build your own.\n\n\nSTUCK?\n  TYPE SOLUTION.TXT shows the full solution. It is a hidden file, so\n  DIR and FIND leave it out.\n",
+   "pw": "",
+   "user": "",
+   "hidden": false,
+   "event": "",
+   "burn": false,
+   "destroyed": false,
+   "revealed": false
+  },
+  "81n19za": {
+   "id": "81n19za",
+   "name": "SOLUTION.TXT",
+   "kind": "txt",
+   "parent": null,
+   "content": "KESTREL STATION - SOLUTION\n  CD PUBLIC, DIR /A, TYPE STICKY.TXT    -> chen / perihelion\n  LOGIN CHEN, password PERIHELION, MAIL 1 -> SECURITY password ORION\n  CD \\SECURITY (ORION), TYPE EYES_ONLY.TXT -> OVERRIDE password KESTREL7\n  CD \\, RUN OVERRIDE (KESTREL7), answer Y\n  FIND SHUTDOWN, then type SHUTDOWN 4471 before the timer runs out.\n",
+   "pw": "",
+   "user": "",
+   "hidden": true,
+   "event": "",
+   "burn": false,
+   "destroyed": false,
+   "revealed": false
+  },
+  "2dh3r6h": {
+   "id": "2dh3r6h",
+   "name": "PUBLIC",
+   "kind": "dir",
+   "parent": null,
+   "content": "",
+   "pw": "",
+   "user": "",
+   "hidden": false,
+   "event": "",
+   "burn": false,
+   "destroyed": false,
+   "revealed": false
+  },
+  "gpp0884": {
+   "id": "gpp0884",
+   "name": "ROSTER.TXT",
+   "kind": "txt",
+   "parent": "2dh3r6h",
+   "content": "KESTREL STATION - CREW ROSTER\n\n  Cmdr. A. Okafor      Station commander     (login: OKAFOR)\n  M. Chen              Chief engineer        (login: CHEN)\n  Dr. P. Lindqvist     Medical officer       (login: LINDQVIST)\n\nGuests have read-only access to PUBLIC.",
+   "pw": "",
+   "user": "",
+   "hidden": false,
+   "event": "",
+   "burn": false,
+   "destroyed": false,
+   "revealed": false
+  },
+  "7ncpwsm": {
+   "id": "7ncpwsm",
+   "name": "NOTICE.TXT",
+   "kind": "txt",
+   "parent": "2dh3r6h",
+   "content": "FROM: STATION AI\n\nReminder to all crew: do NOT leave your password on a sticky note\nnext to the terminal.\n\nI can see you, Chen.",
+   "pw": "",
+   "user": "",
+   "hidden": false,
+   "event": "",
+   "burn": false,
+   "destroyed": false,
+   "revealed": false
+  },
+  "2ihz0cs": {
+   "id": "2ihz0cs",
+   "name": "STICKY.TXT",
+   "kind": "txt",
+   "parent": "2dh3r6h",
+   "content": "  +-----------------------+\n  |  chen / perihelion    |\n  |  (don't tell the AI)  |\n  +-----------------------+",
+   "pw": "",
+   "user": "",
+   "hidden": true,
+   "event": "",
+   "burn": false,
+   "destroyed": false,
+   "revealed": false
+  },
+  "0g4whl1": {
+   "id": "0g4whl1",
+   "name": "SECURITY",
+   "kind": "dir",
+   "parent": null,
+   "content": "",
+   "pw": "ORION",
+   "user": "",
+   "hidden": false,
+   "event": "",
+   "burn": false,
+   "destroyed": false,
+   "revealed": false
+  },
+  "bsi10m6": {
+   "id": "bsi10m6",
+   "name": "EYES_ONLY.TXT",
+   "kind": "txt",
+   "parent": "0g4whl1",
+   "content": "EYES ONLY - M. CHEN\n\nThe password for OVERRIDE.EXE is KESTREL7.\n\nThis file will self-destruct after reading.",
+   "pw": "",
+   "user": "CHEN",
+   "hidden": false,
+   "event": "",
+   "burn": true,
+   "destroyed": false,
+   "revealed": false
+  },
+  "u82scaz": {
+   "id": "u82scaz",
+   "name": "CAMERA.LOG",
+   "kind": "txt",
+   "parent": "0g4whl1",
+   "content": "CAMERA 4 - MAINTENANCE BAY\n03:12  door opened (CHEN)\n03:14  door closed\n03:40  motion near terminal (GUEST)",
+   "pw": "",
+   "user": "",
+   "hidden": false,
+   "event": "",
+   "burn": false,
+   "destroyed": false,
+   "revealed": false
+  },
+  "2qaq6ts": {
+   "id": "2qaq6ts",
+   "name": "MANUAL.TXT",
+   "kind": "txt",
+   "parent": "0g4whl1",
+   "content": "REACTOR MANUAL - SECTION 9: EMERGENCIES\n\nIn a reactor overload, type the emergency code at any terminal:\n\n    SHUTDOWN 4471\n\nDo not delay. Overload becomes meltdown in 90 seconds.",
+   "pw": "",
+   "user": "",
+   "hidden": true,
+   "event": "",
+   "burn": false,
+   "destroyed": false,
+   "revealed": false
+  },
+  "w3yjcdt": {
+   "id": "w3yjcdt",
+   "name": "MEDIA",
+   "kind": "dir",
+   "parent": null,
+   "content": "",
+   "pw": "",
+   "user": "",
+   "hidden": false,
+   "event": "",
+   "burn": false,
+   "destroyed": false,
+   "revealed": false
+  },
+  "jjezusn": {
+   "id": "jjezusn",
+   "name": "RADAR.GIF",
+   "kind": "img",
+   "parent": "w3yjcdt",
+   "content": "data:image/gif;base64,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",
+   "pw": "",
+   "user": "",
+   "hidden": false,
+   "event": "",
+   "burn": false,
+   "destroyed": false,
+   "revealed": false,
+   "frames": [
+    "                                                                      \n                                                                      \n                             *****     :****+                         \n                        :**.                  -**                     \n                      **.                        -**                  \n                    *=                              +*                \n                  **                                  *+              \n                 *=                                    **             \n                *-                                      +*            \n               *+                                    ::::=*           \n               *                                ::::::   =*           \n              +*                          :::::::+++++++++*-          \n              *.                   @@@%::::=++++%%********#*          \n              *.                   @@@@@@@@@@@@@@@@@@@@@@@@*          \n              **                                          *+          \n               *                                          *           \n               *:                                        =*           \n                *.                                      :*            \n                 *                                     .*             \n                  *=                                  *+              \n                   :*                               :*.               \n                     :*=                          +*.                 \n                        +*+                    **=                    \n                            +***          ***+                        \n                                                                      \n                                                                      \n",
+    "                                                                      \n                                                                      \n                             *****     :****+                         \n                        :**.                  -**                     \n                      **.                        -**                  \n                    *=                              +*                \n                  **                                  *+              \n                 *=                                    **             \n                *-                                      +*            \n               *+                                        +*           \n               *                                          *           \n              +*                                          *-          \n              *.                   @@@%                   =*          \n              *.                   @@@@:::::::::::::::::::+*          \n              **                        .%@@#*+++++++++   *+          \n               *                              @@@@@@  ++++*           \n               *:                                 :@@@@@@**           \n                *.                                      @*            \n                 *                                     .*             \n                  *=                                  *+              \n                   :*                               :*.               \n                     :*=                          +*.                 \n                        +*+                    **=                    \n                            +***          ***+                        \n                                                                      \n                                                                      \n",
+    "                                                                      \n                                                                      \n                             *****     :****+                         \n                        :**.                  -**                     \n                      **.                        -**                  \n                    *=                              +*                \n                  **                                  *+              \n                 *=                                    **             \n                *-                                      +*            \n               *+                                        +*           \n               *                                          *           \n              +*                                          *-          \n              *.                   @@@%                   =*          \n              *.                   @@@@::.                =*          \n              **                      @+-:::::            *+          \n               *                        @@+++::::::       *           \n               *:                         @@@+++- :::::. =*           \n                *.                          %@@=+++-  .::*            \n                 *                            %@@:-+++..*             \n                  *=                            @@@- .*+              \n                   :*                             %@-*.               \n                     :*=                          +*.                 \n                        +*+                    **=                    \n                            +***          ***+                        \n                                                                      \n                                                                      \n",
+    "                                                                      \n                                                                      \n                             *****     :****+                         \n                        :**.                  -**                     \n                      **.                        -**                  \n                    *=                              +*                \n                  **                                  *+              \n                 *=                                    **             \n                *-                                      +*            \n               *+                                        +*           \n               *                                          *           \n              +*                                          *-          \n              *.                   @@@%                   =*          \n              *.                   @@@@                   =*          \n              **                     +:::                 *+          \n               *                     *#+:::               *           \n               *:                     *%++:::            =*           \n                *.                     @@++=:::         :*            \n                 *                      @@+++=:::      .*             \n                  *=                     @@*+++ ::    *+              \n                   :*                     @@-+++ :::-*.               \n                     :*=                  @@@ +++ +*.                 \n                        +*+                @@@ +*=                    \n                            +***          ***+                        \n                                                                      \n                                                                      \n",
+    "                                                                      \n                                                                      \n                             *****     :****+                         \n                        :**.                  -**                     \n                      **.                        -**                  \n                    *=                              +*                \n                  **                                  *+              \n                 *=                                    **             \n                *-                                      +*            \n               *+                                        +*           \n               *                                          *           \n              +*                                          *-          \n              *.                   @@@%                   =*          \n              *.                   @@@@                   =*          \n              **                    +::                   *+          \n               *                    *-::                  *           \n               *:                   @+:::                =*           \n                *.                  @*+::.              :*            \n                 *                  @@+=::             .*             \n                  *=                @@++:::           *+              \n                   :*               @@:++:::        :*.               \n                     :*=            @@ ++ ::      +*.                 \n                        +*+         @@ +++.::  **=                    \n                            +***    @@ .+ ***+                        \n                                                                      \n                                                                      \n",
+    "                                                                      \n                                                                      \n                             *****     :****+                         \n                        :**.                  -**                     \n                      **.                        -**                  \n                    *=                              +*                \n                  **                                  *+              \n                 *=                                    **             \n                *-                                      +*            \n               *+                                        +*           \n               *                                          *           \n              +*                                          *-          \n              *.                   @@@%                   =*          \n              *.                   @@@@                   =*          \n              **                  @+::                    *+          \n               *                 :@:::                    *           \n               *:               :@+:::                   =*           \n                *.              @@+:::                  :*            \n                 *             @@++::                  .*             \n                  *=          @@%++::                 *+              \n                   :*        @@@+++::               :*.               \n                     :*=    @@@.++ ::             +*.                 \n                        +*+-@@:+++ ::          **=                    \n                            +***+  ::     ***+                        \n                                                                      \n                                                                      \n",
+    "                                                                      \n                                                                      \n                             *****     :****+                         \n                        :**.                  -**                     \n                      **.                        -**                  \n                    *=                              +*                \n                  **                                  *+              \n                 *=                                    **             \n                *-                                      +*            \n               *+                                        +*           \n               *                                          *           \n              +*                                          *-          \n              *.                   @@@%                   =*          \n              *.                  =@@@@                   =*          \n              **                =%:::                     *+          \n               *              +@+:::                      *           \n               *:           *@%+-::                      =*           \n                *.        @@@*+-::                      :*            \n                 *      @@@ ++-::                      .*             \n                  *=  @@@ +++:::                      *+              \n                   :*@@  ++. ::                     :*.               \n                     :**++  ::                    +*.                 \n                        +*+::                  **=                    \n                            +***          ***+                        \n                                                                      \n                                                                      \n",
+    "                                                                      \n                                                                      \n                             *****     :****+                         \n                        :**.                  -**                     \n                      **.                        -**                  \n                    *=                              +*                \n                  **                                  *+              \n                 *=                                    **             \n                *-                                      +*            \n               *+                                        +*           \n               *                                          *           \n              +*                                          *-          \n              *.                   @@@%                   =*          \n              *.               -@+=@@@@                   =*          \n              **          -@@@++:::                       *+          \n               *     %@@@@@+++:::                         *           \n               *#@@@@@==++++:::                          =*           \n                **  +++++-:::                           :*            \n                 *+++= :::.                            .*             \n                  *= :::.                             *+              \n                   :*:                              :*.               \n                     :*=                          +*.                 \n                        +*+                    **=                    \n                            +***          ***+                        \n                                                                      \n                                                                      \n",
+    "                                                                      \n                                                                      \n                             *****     :****+                         \n                        :**.                  -**                     \n                      **.                        -**                  \n                    *=                              +*                \n                  **                                  *+              \n                 *=                                    **             \n                *-                                      +*            \n               *+                                        +*           \n               *                                          *           \n              +*                                          *-          \n              *********************@@@%                   =*          \n              *@@@@@@@@@@%#+++=-::-@@@@                   =*          \n              *++++++++++=::::::.                         *+          \n               *    :::::::                               *           \n               *:::::                                    =*           \n                *.                                      :*            \n                 *                                     .*             \n                  *=                                  *+              \n                   :*                               :*.               \n                     :*=                          +*.                 \n                        +*+                    **=                    \n                            +***          ***+                        \n                                                                      \n                                                                      \n",
+    "                                                                      \n                                                                      \n                             *****     :****+                         \n                        :**.                  -**                     \n                      **.                        -**                  \n                    *=                              +*                \n                  **                                  *+              \n                 *=                                    **             \n                **                                      +*            \n               *#@@@@@-                                  +*           \n               ++++  %@@@@@                               *           \n              +*  +++++++++*@@@@                          *-          \n              *:::::::::::::::-----@@@%                   =*          \n              *.             .....:@@@@                   =*          \n              **                                          *+          \n               *                                          *           \n               *:                                        =*           \n                *.                                      :*            \n                 *                                     .*             \n                  *=                                  *+              \n                   :*                               :*.               \n                     :*=                          +*.                 \n                        +*+                    **=                    \n                            +***          ***+                        \n                                                                      \n                                                                      \n",
+    "                                                                      \n                                                                      \n                             *****     :****+                         \n                        :**.                  -**                     \n                      **.                        -**                  \n                    *@@                             +*                \n                  **  @@@                             *+              \n                 *=+++= @@@                            **             \n                *::.  +++=@@@.                          +*            \n               *+ .::::::+++%@@.                         +*           \n               *       :::::+++#@                         *           \n              +*           :::::-+@                       *-          \n              *.               .:::@@@%                   =*          \n              *.                   @@@@                   =*          \n              **                                          *+          \n               *                                          *           \n               *:                                        =*           \n                *.                                      :*            \n                 *                                     .*             \n                  *=                                  *+              \n                   :*                               :*.               \n                     :*=                          +*.                 \n                        +*+                    **=                    \n                            +***          ***+                        \n                                                                      \n                                                                      \n",
+    "                                                                      \n                                                                      \n                             *****     :****+                         \n                        :**-@@:               -**                     \n                      **+++:@@@                  -**                  \n                    *::: =+++@@@                    +*                \n                  **   :::.+++@@@                     *+              \n                 *=      :::+++%@#                     **             \n                *-         :::++*@+                     +*            \n               *+            ::-++@                      +*           \n               *              .::-+@                      *           \n              +*                .::+*                     *-          \n              *.                  :@@@%                   =*          \n              *.                   @@@@                   =*          \n              **                                          *+          \n               *                                          *           \n               *:                                        =*           \n                *.                                      :*            \n                 *                                     .*             \n                  *=                                  *+              \n                   :*                               :*.               \n                     :*=                          +*.                 \n                        +*+                    **=                    \n                            +***          ***+                        \n                                                                      \n                                                                      \n",
+    "                                                                      \n                                                                      \n                             ****+ @@@ :****+                         \n                        :**.::: ++ @@@        -**                     \n                      **.    :::+++@@@           -**                  \n                    *=        ::-++@@@              +*                \n                  **          .::+++@@                *+              \n                 *=            .::++@@                 **             \n                *-              :::+@@                  +*            \n               *+                :::+@                   +*           \n               *                  ::=@                    *           \n              +*                  :::%                    *-          \n              *.                   @@@%                   =*          \n              *.                   @@@@                   =*          \n              **                                          *+          \n               *                                          *           \n               *:                                        =*           \n                *.                                      :*            \n                 *                                     .*             \n                  *=                                  *+              \n                   :*                               :*.               \n                     :*=                          +*.                 \n                        +*+                    **=                    \n                            +***          ***+                        \n                                                                      \n                                                                      \n",
+    "                                                                      \n                                                                      \n                             *****  ::::++**+                         \n                        :**.        ::: ++ @@@-**                     \n                      **.           :::+++@@@    -**                  \n                    *=              ::.++=@@:       +*                \n                  **                ::=++@@:          *+              \n                 *=                 ::=+*@@            **             \n                *-                  ::=+@@              +*            \n               *+                   ::=*@                +*           \n               *                    ::+@                  *           \n              +*                    ::+*                  *-          \n              *.                   @@@@                   =*          \n              *.                   @@@@                   =*          \n              **                                          *+          \n               *                                          *           \n               *:                                        =*           \n                *.                                      :*            \n                 *                                     .*             \n                  *=                                  *+              \n                   :*                               :*.               \n                     :*=                          +*.                 \n                        +*+                    **=                    \n                            +***          ***+                        \n                                                                      \n                                                                      \n",
+    "                                                                      \n                                                                      \n                             *****     :****+                         \n                        :**.                :::**                     \n                      **.                  ::: -++**                  \n                    *=                    ::: +++ %@**                \n                  **                     ::: ++ @@@-  *+              \n                 *=                      ::=++%@@:     **             \n                *-                      ::++#@@-        +*            \n               *+                      ::-+@@-           +*           \n               *                      ::-+@@              *           \n              +*                     ::-*@                *-          \n              *.                   @@@%#                  =*          \n              *.                   @@@@                   =*          \n              **                                          *+          \n               *                                          *           \n               *:                                        =*           \n                *.                                      :*            \n                 *                                     .*             \n                  *=                                  *+              \n                   :*                               :*.               \n                     :*=                          +*.                 \n                        +*+                    **=                    \n                            +***          ***+                        \n                                                                      \n                                                                      \n",
+    "                                                                      \n                                                                      \n                             *****     :****+                         \n                        :**.                  -**                     \n                      **.                        -**                  \n                    *=                             :=*                \n                  **                             :::. *+              \n                 *=                            :::.:++++*             \n                *-                           ::::++++:  @*            \n               *+                          :::++++*#@@@@@**           \n               *                         :::+++*@@@@=     *           \n              +*                      .:::++@@@.          *-          \n              *.                   @@@%-+%=               =*          \n              *.                   @@@@                   =*          \n              **                                          *+          \n               *                                          *           \n               *:                                        =*           \n                *.                                      :*            \n                 *                                     .*             \n                  *=                                  *+              \n                   :*                               :*.               \n                     :*=                          +*.                 \n                        +*+                    **=                    \n                            +***          ***+                        \n                                                                      \n                                                                      \n"
+   ],
+   "delays": [
+    90,
+    90,
+    90,
+    90,
+    90,
+    90,
+    90,
+    90,
+    90,
+    90,
+    90,
+    90,
+    90,
+    90,
+    90,
+    90
+   ]
+  },
+  "e5qrwhv": {
+   "id": "e5qrwhv",
+   "name": "OVERRIDE.EXE",
+   "kind": "exe",
+   "parent": null,
+   "content": "KESTREL STATION OVERRIDE v2.1\n@sound modem\nCONNECTING TO MAINFRAME...\n@progress BYPASSING FIREWALL\n@ask UNLOCK ALL DOORS? (Y/N)\n@if YES, Y\n@sound success\nSECURITY OVERRIDE ACCEPTED.\n@delete SECURITY\\CAMERA.LOG\n@reveal SECURITY\\MANUAL.TXT\n@trigger Doors unlocked\n@else\nOVERRIDE CANCELLED. RUN OVERRIDE AGAIN WHEN YOU ARE READY.\n@endif",
+   "pw": "KESTREL7",
+   "user": "",
+   "hidden": false,
+   "event": "",
+   "burn": false,
+   "destroyed": false,
+   "revealed": false
+  }
+ },
+ "users": [
+  {
+   "name": "GUEST",
+   "pw": "",
+   "mail": [
+    {
+     "id": "9l08y3l",
+     "from": "STATION AI",
+     "subj": "WELCOME",
+     "body": "Guest access is limited to PUBLIC. Crew members log in with LOGIN <name>.\n\nPlease do not touch the reactor.",
+     "event": ""
+    }
+   ]
+  },
+  {
+   "name": "CHEN",
+   "pw": "PERIHELION",
+   "mail": [
+    {
+     "id": "h3aiq40",
+     "from": "STATION AI",
+     "subj": "SECURITY ACCESS",
+     "body": "Chen, your SECURITY folder password has been reset to: ORION\n\nThe override password is in your eyes-only file. Read it once; it will not survive.",
+     "event": "tz26yh5"
+    }
+   ]
+  }
+ ],
+ "cmds": [
+  {
+   "name": "SHUTDOWN",
+   "listed": false,
+   "text": "@sound error\nINVALID SHUTDOWN CODE."
+  },
+  {
+   "name": "SOUNDS",
+   "listed": true,
+   "text": "SOUND TEST. Each line says what you should hear, then plays it.\n\n[S1] BEEP: One short, high beep.\n@wait 1200\n@sound beep\n@wait 700\n[S2] BOOT: One short PC power-on beep.\n@wait 1200\n@sound boot\n@wait 700\n[S3] ERROR: A low, buzzy error tone.\n@wait 1200\n@sound error\n@wait 700\n[S4] ALERT: Two quick two-tone chirps.\n@wait 1200\n@sound alert\n@wait 700\n[S5] CHIRP: One fast upward chirp.\n@wait 1200\n@sound chirp\n@wait 700\n[S6] TICK: A single tiny tick (listen closely).\n@wait 1200\n@sound tick\n@wait 700\n[S7] KEYS: A burst of keyboard clicks.\n@wait 1200\n@sound keys\n@wait 700\n[S8] SUCCESS: Four rising notes.\n@wait 1200\n@sound success\n@wait 700\n[S9] FAIL: Three falling notes.\n@wait 1200\n@sound fail\n@wait 700\n[S10] ALARM: A siren rising and falling three times (about 2 seconds).\n@wait 1200\n@sound alarm\n@wait 700\n[S11] KLAXON: Three low, harsh pulses (about 2 seconds).\n@wait 1200\n@sound klaxon\n@wait 700\n[S12] STATIC: A burst of radio static.\n@wait 1200\n@sound static\n@wait 700\n[S13] GLITCH: Digital crackle.\n@wait 1200\n@sound glitch\n@wait 700\n[S14] POWERUP: A tone sweeping upward (1 second).\n@wait 1200\n@sound powerup\n@wait 700\n[S15] POWERDOWN: A tone sweeping down to a low growl (1 second).\n@wait 1200\n@sound powerdown\n@wait 700\n[S16] DIALTONE: A phone dial tone (1.5 seconds).\n@wait 1200\n@sound dialtone\n@wait 700\n[S17] RING: A phone ringing twice.\n@wait 1200\n@sound ring\n@wait 700\n[S18] BUSY: A busy signal: three beeps (2.5 seconds).\n@wait 1200\n@sound busy\n@wait 700\n[S19] DIAL 5550714: Seven touch-tone digits being dialed.\n@wait 1200\n@sound dial 5550714\n@wait 700\n[S20] MODEM: A dial-up modem connecting (about 3 seconds).\n@wait 1200\n@sound modem\n@wait 700\n[S21] MISSPELLED SOUND: nothing should play. (With Run now, a [TEST] note appears instead.)\n@wait 1200\n@sound alarmm\n@wait 700\n\nSound test finished. If you heard nothing at all, check your volume and type SOUND ON."
+  },
+  {
+   "name": "VOICE",
+   "listed": true,
+   "text": "VOICE TEST.\n\n[V1] A robotic voice reads this line aloud while it types out.\n@wait 1200\n@speak Hello. I am the terminal. Can you hear me?\n@wait 300\n[V2] A longer line. The script waits for the voice to finish before going on.\n@wait 1200\n@speak This sentence is a little longer, so you can judge whether the voice is clear enough for players to follow.\n@wait 300\n[V3] For comparison: the same kind of line with @slow, typed out with no voice.\n@wait 1200\n@slow This one is silent. Same color, no voice.\n@wait 300\n\nVoice test finished. Type SOUND OFF and run VOICE again: the text should still type out, silently. Then type SOUND ON."
+  },
+  {
+   "name": "EFFECTS",
+   "listed": true,
+   "text": "SCREEN EFFECTS TEST.\nThese lines are here so the glitch has something to scramble.\nThe quick brown fox jumps over the lazy dog.\n\n[E1] FLASH: the screen flashes white once.\n@wait 1200\n@flash\n@wait 700\n[E2] FLASH RED: the screen flashes red once.\n@wait 1200\n@flash red\n@wait 700\n[E3] SHAKE: the text shakes for half a second.\n@wait 1200\n@shake\n@wait 700\n[E4] LONG SHAKE: the text shakes for 2 seconds.\n@wait 1200\n@shake 2000\n@wait 700\n[E5] GLITCH: the screen jitters and the last lines scramble for under a second, then go back to normal.\n@wait 1200\n@glitch\n@wait 700\n[E6] LONG GLITCH: the same for 3 seconds. Every line should come back exactly as it was.\n@wait 1200\n@glitch 3000\n@wait 700\n[E7] EVERYTHING AT ONCE: alarm, red flash, shake and glitch, like a real emergency.\n@wait 1200\n@sound alarm\n@flash red\n@shake 800\n@sound static\n@glitch 1200\n@wait 700\n\nEffects test finished."
+  },
+  {
+   "name": "THEMES",
+   "listed": true,
+   "text": "THEME TEST. Each theme shows a sample: a normal line, a character speaking, and an error. Press Enter to move to the next one.\n\n[T1] 80S GREEN CRT: Glowing green, curved corners, scanlines, block cursor.\n@theme 80s green CRT\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T2] AMBER TERMINAL: The same monitor in amber.\n@theme Amber terminal\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T3] DOS PC: Gray on black, flatter screen, no curved corners, blinking underscore cursor.\n@theme DOS PC\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T4] PC BLUE: Light text on bright blue, underscore cursor.\n@theme PC blue\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T5] 80S HOME COMPUTER: ALL CAPS, lavender on purple, wide purple border around the screen.\n@theme 80s home computer\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T6] MILITARY TELETYPE: ALL CAPS on paper with holes down the sides. The voice line below prints in red ink.\n@theme Military teletype\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T7] 90S CORPORATE: Flat and clean: dark text on light gray, no glow, thin cursor. Voice line in blue.\n@theme 90s corporate\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T8] CYBERPUNK: Neon cyan on deep purple with a color fringe. Voice line in hot pink.\n@theme Cyberpunk\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T9] PAPER WHITE: The green CRT monitor in white.\n@theme Paper white\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T10] ICE CYAN: The CRT monitor in cyan.\n@theme Ice cyan\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T11] NEON MAGENTA: The CRT monitor in magenta.\n@theme Neon magenta\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T12] RED ALERT: The CRT monitor in red.\n@theme Red alert\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T13] BACK TO NORMAL: the screen returns to this scenario's own theme.\n@wait 1000\n@theme default\n\nTheme test finished."
+  },
+  {
+   "name": "ASK",
+   "listed": true,
+   "text": "QUESTION TEST.\n\n[A1] A question appears on the prompt line. Type YES (or y; capitals don't matter).\n@ask Can you see this question?\n@if YES, Y\nCORRECT: the YES branch ran.\n\n[A2] A second question inside the first answer. Type anything EXCEPT blue.\n@ask Favorite color?\n@if BLUE\nYou typed blue, so this is the blue branch. Run ASK again and type something else to test the other branch.\n@else\nCORRECT: the otherwise branch ran.\n@endif\n@else\nYou did not say yes, so the otherwise branch ran. Run ASK again and type YES to test the rest.\n@endif\n\n[A3] This line always prints, whatever you answered.\nQuestion test finished. Your answers are also in the GM Activity log."
+  },
+  {
+   "name": "GIF",
+   "listed": true,
+   "text": "ANIMATED GIF TEST.\n\n[G1] A radar sweep plays twice, then the script continues.\n@wait 1200\n@play MEDIA\\RADAR.GIF 2\n@wait 300\n\n[G2] Now type TYPE MEDIA\\RADAR.GIF yourself. It should loop with (PRESS ANY KEY TO STOP) under it; any key stops it.\n\nGIF test finished."
+  },
+  {
+   "name": "ALL",
+   "listed": true,
+   "text": "SOUND TEST. Each line says what you should hear, then plays it.\n\n[S1] BEEP: One short, high beep.\n@wait 1200\n@sound beep\n@wait 700\n[S2] BOOT: One short PC power-on beep.\n@wait 1200\n@sound boot\n@wait 700\n[S3] ERROR: A low, buzzy error tone.\n@wait 1200\n@sound error\n@wait 700\n[S4] ALERT: Two quick two-tone chirps.\n@wait 1200\n@sound alert\n@wait 700\n[S5] CHIRP: One fast upward chirp.\n@wait 1200\n@sound chirp\n@wait 700\n[S6] TICK: A single tiny tick (listen closely).\n@wait 1200\n@sound tick\n@wait 700\n[S7] KEYS: A burst of keyboard clicks.\n@wait 1200\n@sound keys\n@wait 700\n[S8] SUCCESS: Four rising notes.\n@wait 1200\n@sound success\n@wait 700\n[S9] FAIL: Three falling notes.\n@wait 1200\n@sound fail\n@wait 700\n[S10] ALARM: A siren rising and falling three times (about 2 seconds).\n@wait 1200\n@sound alarm\n@wait 700\n[S11] KLAXON: Three low, harsh pulses (about 2 seconds).\n@wait 1200\n@sound klaxon\n@wait 700\n[S12] STATIC: A burst of radio static.\n@wait 1200\n@sound static\n@wait 700\n[S13] GLITCH: Digital crackle.\n@wait 1200\n@sound glitch\n@wait 700\n[S14] POWERUP: A tone sweeping upward (1 second).\n@wait 1200\n@sound powerup\n@wait 700\n[S15] POWERDOWN: A tone sweeping down to a low growl (1 second).\n@wait 1200\n@sound powerdown\n@wait 700\n[S16] DIALTONE: A phone dial tone (1.5 seconds).\n@wait 1200\n@sound dialtone\n@wait 700\n[S17] RING: A phone ringing twice.\n@wait 1200\n@sound ring\n@wait 700\n[S18] BUSY: A busy signal: three beeps (2.5 seconds).\n@wait 1200\n@sound busy\n@wait 700\n[S19] DIAL 5550714: Seven touch-tone digits being dialed.\n@wait 1200\n@sound dial 5550714\n@wait 700\n[S20] MODEM: A dial-up modem connecting (about 3 seconds).\n@wait 1200\n@sound modem\n@wait 700\n[S21] MISSPELLED SOUND: nothing should play. (With Run now, a [TEST] note appears instead.)\n@wait 1200\n@sound alarmm\n@wait 700\n\nSound test finished. If you heard nothing at all, check your volume and type SOUND ON.\n@ask (Press Enter to continue)\n@clear\nVOICE TEST.\n\n[V1] A robotic voice reads this line aloud while it types out.\n@wait 1200\n@speak Hello. I am the terminal. Can you hear me?\n@wait 300\n[V2] A longer line. The script waits for the voice to finish before going on.\n@wait 1200\n@speak This sentence is a little longer, so you can judge whether the voice is clear enough for players to follow.\n@wait 300\n[V3] For comparison: the same kind of line with @slow, typed out with no voice.\n@wait 1200\n@slow This one is silent. Same color, no voice.\n@wait 300\n\nVoice test finished. Type SOUND OFF and run VOICE again: the text should still type out, silently. Then type SOUND ON.\n@ask (Press Enter to continue)\n@clear\nSCREEN EFFECTS TEST.\nThese lines are here so the glitch has something to scramble.\nThe quick brown fox jumps over the lazy dog.\n\n[E1] FLASH: the screen flashes white once.\n@wait 1200\n@flash\n@wait 700\n[E2] FLASH RED: the screen flashes red once.\n@wait 1200\n@flash red\n@wait 700\n[E3] SHAKE: the text shakes for half a second.\n@wait 1200\n@shake\n@wait 700\n[E4] LONG SHAKE: the text shakes for 2 seconds.\n@wait 1200\n@shake 2000\n@wait 700\n[E5] GLITCH: the screen jitters and the last lines scramble for under a second, then go back to normal.\n@wait 1200\n@glitch\n@wait 700\n[E6] LONG GLITCH: the same for 3 seconds. Every line should come back exactly as it was.\n@wait 1200\n@glitch 3000\n@wait 700\n[E7] EVERYTHING AT ONCE: alarm, red flash, shake and glitch, like a real emergency.\n@wait 1200\n@sound alarm\n@flash red\n@shake 800\n@sound static\n@glitch 1200\n@wait 700\n\nEffects test finished.\n@ask (Press Enter to continue)\n@clear\nTHEME TEST. Each theme shows a sample: a normal line, a character speaking, and an error. Press Enter to move to the next one.\n\n[T1] 80S GREEN CRT: Glowing green, curved corners, scanlines, block cursor.\n@theme 80s green CRT\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T2] AMBER TERMINAL: The same monitor in amber.\n@theme Amber terminal\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T3] DOS PC: Gray on black, flatter screen, no curved corners, blinking underscore cursor.\n@theme DOS PC\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T4] PC BLUE: Light text on bright blue, underscore cursor.\n@theme PC blue\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T5] 80S HOME COMPUTER: ALL CAPS, lavender on purple, wide purple border around the screen.\n@theme 80s home computer\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T6] MILITARY TELETYPE: ALL CAPS on paper with holes down the sides. The voice line below prints in red ink.\n@theme Military teletype\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T7] 90S CORPORATE: Flat and clean: dark text on light gray, no glow, thin cursor. Voice line in blue.\n@theme 90s corporate\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T8] CYBERPUNK: Neon cyan on deep purple with a color fringe. Voice line in hot pink.\n@theme Cyberpunk\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T9] PAPER WHITE: The green CRT monitor in white.\n@theme Paper white\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T10] ICE CYAN: The CRT monitor in cyan.\n@theme Ice cyan\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T11] NEON MAGENTA: The CRT monitor in magenta.\n@theme Neon magenta\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T12] RED ALERT: The CRT monitor in red.\n@theme Red alert\nNormal text: The quick brown fox jumps over the lazy dog. 0123456789\n@slow This is how a character speaking looks.\n@ask (Press Enter to continue)\n[T13] BACK TO NORMAL: the screen returns to this scenario's own theme.\n@wait 1000\n@theme default\n\nTheme test finished.\n@ask (Press Enter to continue)\n@clear\nQUESTION TEST.\n\n[A1] A question appears on the prompt line. Type YES (or y; capitals don't matter).\n@ask Can you see this question?\n@if YES, Y\nCORRECT: the YES branch ran.\n\n[A2] A second question inside the first answer. Type anything EXCEPT blue.\n@ask Favorite color?\n@if BLUE\nYou typed blue, so this is the blue branch. Run ASK again and type something else to test the other branch.\n@else\nCORRECT: the otherwise branch ran.\n@endif\n@else\nYou did not say yes, so the otherwise branch ran. Run ASK again and type YES to test the rest.\n@endif\n\n[A3] This line always prints, whatever you answered.\nQuestion test finished. Your answers are also in the GM Activity log.\n@ask (Press Enter to continue)\n@clear\nANIMATED GIF TEST.\n\n[G1] A radar sweep plays twice, then the script continues.\n@wait 1200\n@play MEDIA\\RADAR.GIF 2\n@wait 300\n\n[G2] Now type TYPE MEDIA\\RADAR.GIF yourself. It should loop with (PRESS ANY KEY TO STOP) under it; any key stops it.\n\nGIF test finished.\n\nALL TESTS FINISHED."
+  }
+ ],
+ "log": []
+}

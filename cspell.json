@@ -1,0 +1,37 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "ignorePaths": ["Backups/**"],
+  "ignoreRegExpList": [
+    "/data:[a-z]+\\/[a-z0-9.+-]+;base64,[A-Za-z0-9+\\/=]+/g",
+    "/[A-Za-z0-9+\\/]{40,}={0,2}/g",
+    "/\"\\d[a-z0-9]{4,12}\"/g",
+    "/\"(id|parent)\":\"[a-z0-9]+\"/g",
+    "/\"[a-z0-9]{5,12}\":\\{\"id\"/g"
+  ],
+  "words": [
+    "accfg",
+    "alarmm",
+    "buzzy",
+    "Carrois",
+    "Cutive",
+    "dialtone",
+    "gmmode",
+    "gmterminalkit",
+    "keystream",
+    "Kestrel",
+    "Lindqvist",
+    "NEWCMD",
+    "Okafor",
+    "paccent",
+    "pborder",
+    "pdim",
+    "pfont",
+    "powerdown",
+    "powerup",
+    "psize",
+    "scanlines",
+    "Serius",
+    "Thornfield"
+  ]
+}
